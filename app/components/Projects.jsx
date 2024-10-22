@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 
 const Projects = () => {
   const [projects, setProjects] = useState();
-  useEffect(async () => {
-    const data = await getProjects();
-    setProjects(data);
-  }, []);
+  useEffect(() => {
+    getProjects().then((data) => setProjects(data));
+  });
 
   return (
     <div className="flex flex-wrap gap-10 mt-36 items-center justify-center p-5">
-      {projects.map((project) => {
+      {projects?.map((project) => {
         return (
           <ProjectModel
             key={project.name}
