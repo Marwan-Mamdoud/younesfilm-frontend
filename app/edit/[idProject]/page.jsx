@@ -37,7 +37,7 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     getproject();
-  });
+  }, []);
 
   const [images, setImages] = useState([]);
   const [imageScene, setImagesBehined] = useState([]);
