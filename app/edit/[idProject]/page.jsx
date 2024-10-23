@@ -15,11 +15,12 @@ const Page = ({ params }) => {
   const [ImagesprojectReviewBehind, setImagesprojectReviewBehind] = useState();
   const [ProjectCrews, setProjectCrews] = useState();
   const [ProjectVideo, setProjectVideo] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const getproject = async () => {
     try {
+      setLoading(true);
       const data = await getProject(idProject);
-      await setProject(data);
+      setProject(data);
       setProjectName(project.name);
       setProjectDate(project.date);
       setProjectReview(project.review);
@@ -28,7 +29,6 @@ const Page = ({ params }) => {
       setImagesprojectReviewBehind(project.imagesBehindScenes);
       setProjectVideo(project.videos);
       setProjectCrews(project.crews);
-
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -37,7 +37,7 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     getproject();
-  });
+  }, []);
 
   const [images, setImages] = useState([]);
   const [imageScene, setImagesBehined] = useState([]);
@@ -88,7 +88,7 @@ const Page = ({ params }) => {
     >
       <div className="flex justify-center items-center h-fit w-full ">
         <div className="bg-green-400 text-3xl h-full mb-11 w-fit p-4 text-center text-white font-bold cursor-pointer">
-          Edit {project?.name} Project
+          Edit {ProjectName} Project
         </div>
         <div className="bg-blue-400 text-3xl h-full mb-11 w-fit p-4 text-center text-white font-bold cursor-pointer">
           <Link href="/" className="w-full h-full">
