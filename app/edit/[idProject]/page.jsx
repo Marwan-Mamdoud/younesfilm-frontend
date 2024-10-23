@@ -258,14 +258,14 @@ const Page = ({ params }) => {
       <input
         onChange={async (e) => {
           const image = await compressImage(e.target.files[0]);
+          console.log(image, "compress image");
           const reader = new FileReader();
-          reader.onloadend = () => {
+          reader.readAsDataURL(image);
+          reader.onload = () => {
             setImage(reader.result);
+            console.log(reader.result, "image after reader");
             // This will be a base64 string
           };
-          reader.readAsDataURL(image);
-          reader.readAsDataURL(e.target.files[0]);
-          // setImage(URL.createObjectURL(e.target.files[0]));
         }}
         type="file"
         id="image"
@@ -313,12 +313,12 @@ const Page = ({ params }) => {
           const image = await compressImage(e.target.files[0]);
           console.log(image, "compress image");
           const reader = new FileReader();
-          reader.onloadend = () => {
+          reader.readAsDataURL(image);
+          reader.onload = () => {
             setImage(reader.result);
             console.log(reader.result, "image after reader");
             // This will be a base64 string
           };
-          reader.readAsDataURL(image);
         }}
         multiple
         type="file"
