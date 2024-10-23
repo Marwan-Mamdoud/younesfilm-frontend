@@ -169,7 +169,7 @@ const Page = ({ params }) => {
         add Input
       </button>
       <div className="grid grid-cols-2 gap-2 mx-auto my-5">
-        {ProjectVideo.map((video, i) => {
+        {ProjectVideo?.map((video, i) => {
           return (
             <input
               type="text"
