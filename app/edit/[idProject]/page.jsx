@@ -48,17 +48,17 @@ const Page = ({ params }) => {
     const form = new FormData(formdata);
     // HUNDLE Crews ==========================================
     let crews = document.querySelectorAll(".crews");
-    crews = Array.from(crews).map((item) =>
+    crews = Array.from(crews)?.map((item) =>
       item.value == "" ? null : item.value
     );
     crews = crews.filter((item) => item !== null);
-    crews = crews.map((cr) => {
+    crews = crews?.map((cr) => {
       return { name: cr.split(",")[0].trim(), job: cr.split(",")[1].trim() };
     });
     // ======================================================
     // HUNDLE Videos ===========================================
     let videos = document.querySelectorAll(".videos");
-    videos = Array.from(videos).map((item) =>
+    videos = Array.from(videos)?.map((item) =>
       item.value == "" ? null : item.value
     );
     videos = videos.filter((item) => item !== null);
@@ -206,7 +206,7 @@ const Page = ({ params }) => {
         add Input
       </button>
       <div className="grid grid-cols-2 gap-2 mx-auto my-5">
-        {ProjectCrews.map((item, i) => {
+        {ProjectCrews?.map((item, i) => {
           return (
             <input
               key={i}
@@ -258,7 +258,7 @@ const Page = ({ params }) => {
         className="border-b-2 border-slate-500 outline-none hidden h-10 w-[400px] text-center pl-2 placeholder:text-2xl text-stone-600 text-2xl "
       />
       <div className="flex flex-wrap gap-2">
-        {ProjectImages.map((image, i) => {
+        {ProjectImages?.map((image, i) => {
           // const img = URL.createObjectURL(image);
           // console.log(`http://localhost:4000/${image}`);
           return (
@@ -271,7 +271,7 @@ const Page = ({ params }) => {
             />
           );
         })}
-        {images.map((image, i) => {
+        {images?.map((image, i) => {
           return (
             <img
               key={i}
@@ -310,7 +310,7 @@ const Page = ({ params }) => {
         className="border-b-2 hidden border-slate-500 outline-none h-10 w-[400px] text-center pl-2 placeholder:text-2xl text-stone-600 text-2xl"
       />
       <div className="flex flex-wrap gap-2">
-        {ImagesprojectReviewBehind.map((image, i) => {
+        {ImagesprojectReviewBehind?.map((image, i) => {
           return (
             <img
               key={i}
@@ -321,7 +321,7 @@ const Page = ({ params }) => {
             />
           );
         })}
-        {imageScene.map((image, i) => {
+        {imageScene?.map((image, i) => {
           return (
             <img
               key={i}
