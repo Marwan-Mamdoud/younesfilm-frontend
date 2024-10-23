@@ -15,10 +15,9 @@ const Page = ({ params }) => {
   const [ImagesprojectReviewBehind, setImagesprojectReviewBehind] = useState();
   const [ProjectCrews, setProjectCrews] = useState();
   const [ProjectVideo, setProjectVideo] = useState();
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
   const getproject = async () => {
     try {
-      setLoading(true);
       const data = await getProject(idProject);
       setProject(data);
       setProjectName(project.name);
