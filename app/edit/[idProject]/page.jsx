@@ -17,8 +17,8 @@ const Page = ({ params }) => {
   const [ProjectVideo, setProjectVideo] = useState();
   const [loading, setLoading] = useState(false);
   const getproject = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const data = await getProject(idProject);
       setProject(data);
       setProjectName(project.name);
@@ -29,7 +29,7 @@ const Page = ({ params }) => {
       setImagesprojectReviewBehind(project.imagesBehindScenes);
       setProjectVideo(project.videos);
       setProjectCrews(project.crews);
-      setLoading(true);
+      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
