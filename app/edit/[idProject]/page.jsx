@@ -314,7 +314,7 @@ const Page = ({ params }) => {
           console.log(image, "compress image");
           const reader = new FileReader();
           reader.readAsDataURL(image);
-          reader.onload = async () => {
+          reader.onload = () => {
             setImagesBehined(reader.result);
             console.log(reader.result, "image after reader");
 
@@ -343,7 +343,7 @@ const Page = ({ params }) => {
           return (
             <img
               key={i}
-              src={image}
+              src={`${image}`}
               alt={image}
               className="w-20 h-20 object-cover"
             />
