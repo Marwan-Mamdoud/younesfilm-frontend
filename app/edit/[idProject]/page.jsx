@@ -262,7 +262,7 @@ const Page = ({ params }) => {
           const reader = new FileReader();
           reader.readAsDataURL(image);
           reader.onload = () => {
-            setImage(reader.result);
+            setImages(reader.result);
             console.log(reader.result, "image after reader");
             // This will be a base64 string
           };
@@ -314,9 +314,10 @@ const Page = ({ params }) => {
           console.log(image, "compress image");
           const reader = new FileReader();
           reader.readAsDataURL(image);
-          reader.onload = () => {
-            setImage(reader.result);
+          reader.onload = async () => {
+            setImagesBehined(reader.result);
             console.log(reader.result, "image after reader");
+
             // This will be a base64 string
           };
         }}
