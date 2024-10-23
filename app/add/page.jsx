@@ -46,8 +46,8 @@ const Page = () => {
     //=======================================================================
     const data = Object.fromEntries(form.entries());
     data.Images = images;
-    data.crews = crews;
-    data.videos = videos;
+    data.crews = JSON.stringify(crews);
+    data.videos = JSON.stringify(videos);
     data.thumbnailImage = image;
     data.ImagesBehindScenes = imageScene;
     console.log(data, "form");
