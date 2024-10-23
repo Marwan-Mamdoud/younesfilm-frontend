@@ -65,18 +65,14 @@ const Page = ({ params }) => {
     videos = videos.filter((item) => item !== null);
     //====================================================
     //HUNDLE IMAGES=========================================
-    // form.append("thumbnail", image1);
-    images.forEach((image) => form.append("images", image));
-    imageScene.forEach((image) => form.append("imagesBehindScenes", image));
-    form.append("crews", JSON.stringify(crews));
-    form.append("videos", JSON.stringify(videos));
-    form.append("thumbnailImage", image);
-    //=======================================================================
     //=======================================================================
     const data = Object.fromEntries(form.entries());
     data.Images = images;
+    data.crews = JSON.stringify(crews);
+    data.videos = JSON.stringify(videos);
+    data.thumbnailImage = image;
     data.ImagesBehindScenes = imageScene;
-    console.log(data, crews, "form");
+    console.log(data, "form");
     await updateProject(idProject, data);
   };
   if (loading) {
