@@ -1,6 +1,7 @@
 "use client";
 import { deleteImage, getProject, updateProject } from "@/lib/api";
 import Link from "next/link";
+import imageCompression from "browser-image-compression";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
@@ -42,6 +43,16 @@ const Page = ({ params }) => {
   const [imageScene, setImagesBehined] = useState([]);
   const [IncaseInput, setIncaseInput] = useState([]);
   const [VideoInput, setVideoInput] = useState([]);
+
+  const compressImage = async (file) => {
+    const options = {
+      maxSizeMB: 1, // Compress to a max of 1MB per image
+      maxWidthOrHeight: 1024, // Resize to a max width or height
+      useWebWorker: true,
+    };
+    return await imageCompression(file, options);
+  };
+
   const hundleForm = async (e) => {
     e.preventDefault();
     const formdata = document.getElementById("form");
@@ -65,6 +76,7 @@ const Page = ({ params }) => {
     //====================================================
     //HUNDLE IMAGES=========================================
     //=======================================================================
+
     const data = Object.fromEntries(form.entries());
     data.Images = images;
     data.crews = JSON.stringify(crews);
@@ -124,13 +136,14 @@ const Page = ({ params }) => {
       <input
         name="thumbnailImage"
         id="thumbnail"
-        onChange={(e) => {
+        onChange={async (e) => {
+          const image = await compressImage(e.target.files[0]);
           const reader = new FileReader();
           reader.onloadend = () => {
             setImage(reader.result);
             // This will be a base64 string
           };
-          reader.readAsDataURL(e.target.files[0]);
+          reader.readAsDataURL(image);
           // setImage1(e.target.files[0]);
           // setImage(URL.createObjectURL(e.target.files[0]));
         }}
@@ -243,12 +256,14 @@ const Page = ({ params }) => {
         Choose Image For Project
       </label>
       <input
-        onChange={(e) => {
+        onChange={async (e) => {
+          const image = await compressImage(e.target.files[0]);
           const reader = new FileReader();
           reader.onloadend = () => {
-            setImages((prev) => [...prev, reader.result]);
+            setImage(reader.result);
             // This will be a base64 string
           };
+          reader.readAsDataURL(image);
           reader.readAsDataURL(e.target.files[0]);
           // setImage(URL.createObjectURL(e.target.files[0]));
         }}
@@ -294,14 +309,14 @@ const Page = ({ params }) => {
         Choose Image For Behind Scenes Scetion
       </label>
       <input
-        onChange={(e) => {
+        onChange={async (e) => {
+          const image = await compressImage(e.target.files[0]);
           const reader = new FileReader();
           reader.onloadend = () => {
-            setImagesBehined((prev) => [...prev, reader.result]);
+            setImage(reader.result);
             // This will be a base64 string
           };
-          reader.readAsDataURL(e.target.files[0]);
-          // setImage(URL.createObjectURL(e.target.files[0]));
+          reader.readAsDataURL(image);
         }}
         multiple
         type="file"
