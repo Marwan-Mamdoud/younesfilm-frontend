@@ -15,7 +15,7 @@ const Page = ({ params }) => {
   const [ImagesprojectReviewBehind, setImagesprojectReviewBehind] = useState();
   const [ProjectCrews, setProjectCrews] = useState();
   const [ProjectVideo, setProjectVideo] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const getproject = async () => {
     try {
       const data = await getProject(idProject);
@@ -28,15 +28,13 @@ const Page = ({ params }) => {
       setImagesprojectReviewBehind(project.imagesBehindScenes);
       setProjectVideo(project.videos);
       setProjectCrews(project.crews);
-      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
   };
-
   useEffect(() => {
     getproject();
-  }, []);
+  }, [project]);
 
   const [images, setImages] = useState([]);
   const [imageScene, setImagesBehined] = useState([]);
