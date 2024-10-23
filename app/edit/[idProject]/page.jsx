@@ -311,9 +311,11 @@ const Page = ({ params }) => {
       <input
         onChange={async (e) => {
           const image = await compressImage(e.target.files[0]);
+          console.log(image, "compress image");
           const reader = new FileReader();
           reader.onloadend = () => {
             setImage(reader.result);
+            console.log(reader.result, "image after reader");
             // This will be a base64 string
           };
           reader.readAsDataURL(image);
