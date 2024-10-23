@@ -18,7 +18,6 @@ const Page = ({ params }) => {
   const [loading, setLoading] = useState(false);
   const getproject = async () => {
     try {
-      setLoading(true);
       const data = await getProject(idProject);
       setProject(data);
       setProjectName(project.name);
@@ -29,13 +28,14 @@ const Page = ({ params }) => {
       setImagesprojectReviewBehind(project.imagesBehindScenes);
       setProjectVideo(project.videos);
       setProjectCrews(project.crews);
-      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
   };
   useEffect(() => {
+    setLoading(true);
     getproject();
+    setLoading(false);
   }, [project]);
 
   const [images, setImages] = useState([]);
