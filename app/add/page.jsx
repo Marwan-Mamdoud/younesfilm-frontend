@@ -1,7 +1,7 @@
 "use client";
 import { addProject } from "@/lib/api";
 import Link from "next/link";
-import path from "path";
+import imageCompression from "browser-image-compression";
 import React, { useState } from "react";
 
 const Page = () => {
@@ -11,6 +11,15 @@ const Page = () => {
   const [imageScene, setImagesBehined] = useState([]);
   const [IncaseInput, setIncaseInput] = useState([]);
   const [VideoInput, setVideoInput] = useState([]);
+
+  const compressImage = async (file) => {
+    const options = {
+      maxSizeMB: 1, // Compress to a max of 1MB per image
+      maxWidthOrHeight: 1024, // Resize to a max width or height
+      useWebWorker: true,
+    };
+    return await imageCompression(file, options);
+  };
 
   const hundleForm = async (e) => {
     e.preventDefault();
@@ -34,16 +43,12 @@ const Page = () => {
     videos = videos.filter((item) => item !== null);
     //====================================================
     //HUNDLE IMAGES=========================================
-    // form.append("thumbnail", image1);
-    images.forEach((image) => form.append("images", image));
-    imageScene.forEach((image) => form.append("imagesBehindScenes", image));
-    form.append("crews", JSON.stringify(crews));
-    form.append("videos", JSON.stringify(videos));
-    form.append("thumbnailImage", image);
-    //=======================================================================
     //=======================================================================
     const data = Object.fromEntries(form.entries());
     data.Images = images;
+    data.crews = crews;
+    data.videos = videos;
+    data.thumbnailImage = image;
     data.ImagesBehindScenes = imageScene;
     console.log(data, "form");
     await addProject(data);
@@ -84,15 +89,18 @@ const Page = () => {
       <input
         name="thumbnailImage"
         id="thumbnail"
-        onChange={(e) => {
+        onChange={async (e) => {
+          setImage1(e.target.files[0]);
+          const image = await compressImage(e.target.files[0]);
+          console.log(image, "compress image");
           const reader = new FileReader();
-          reader.onloadend = () => {
+          reader.readAsDataURL(image);
+          reader.onload = () => {
             setImage(reader.result);
+            console.log(reader.result, "image after reader");
+
             // This will be a base64 string
           };
-          reader.readAsDataURL(e.target.files[0]);
-          setImage1(e.target.files[0]);
-          // setImage(URL.createObjectURL(e.target.files[0]));
         }}
         type="file"
         placeholder="Enter Name Of The project"
@@ -256,12 +264,17 @@ const Page = () => {
         Choose Image For Project
       </label>
       <input
-        onChange={(e) => {
+        onChange={async (e) => {
+          const image = await compressImage(e.target.files[0]);
+          console.log(image, "compress image");
           const reader = new FileReader();
-          reader.onloadend = () => {
-            setImages((prev) => [...prev, reader.result]); // This will be a base64 string
+          reader.readAsDataURL(image);
+          reader.onload = () => {
+            setImages((prev) => [...prev, reader.result]);
+            console.log(reader.result, "image after reader");
+
+            // This will be a base64 string
           };
-          reader.readAsDataURL(e.target.files[0]);
         }}
         type="file"
         id="image"
@@ -293,13 +306,17 @@ const Page = () => {
         Choose Image For Behind Scenes Scetion
       </label>
       <input
-        onChange={(e) => {
+        onChange={async (e) => {
+          const image = await compressImage(e.target.files[0]);
+          console.log(image, "compress image");
           const reader = new FileReader();
-          reader.onloadend = () => {
-            setImagesBehined((prev) => [...prev, reader.result]); // This will be a base64 string
+          reader.readAsDataURL(image);
+          reader.onload = () => {
+            setImagesBehined((prev) => [...prev, reader.result]);
+            console.log(reader.result, "image after reader");
+
+            // This will be a base64 string
           };
-          reader.readAsDataURL(e.target.files[0]);
-          // setImagesBehined(e.target.files[0]);
         }}
         multiple
         type="file"
