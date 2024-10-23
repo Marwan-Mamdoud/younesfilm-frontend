@@ -66,11 +66,11 @@ const Page = ({ params }) => {
     //HUNDLE IMAGES=========================================
     //=======================================================================
     const data = Object.fromEntries(form.entries());
-    data.Images = JSON.stringify(images);
+    data.Images = images;
     data.crews = JSON.stringify(crews);
     data.videos = JSON.stringify(videos);
     data.thumbnailImage = image;
-    data.ImagesBehindScenes = JSON.stringify(imageScene);
+    data.ImagesBehindScenes = imageScene;
     console.log(data, "form");
     await updateProject(idProject, data);
   };
