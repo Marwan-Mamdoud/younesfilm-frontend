@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import Link from "next/link";
+import { FaPlus } from "react-icons/fa";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,6 +25,27 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div className=" flex mx-auto mt-5 justify-between max-w-[1200px]">
+          <Link href="/" className="text-5xl text-white font-semibold ">
+            Dashboard
+          </Link>
+          <div className="flex items-center justify-center gap-6">
+            <Link
+              href="/add"
+              className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px] hover:bg-white hover:text-black duration-500 ease-in"
+            >
+              {" "}
+              <FaPlus /> New Projects
+            </Link>
+            <Link
+              href="/addCategory"
+              className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px]  hover:bg-white hover:text-black duration-500 ease-in"
+            >
+              {" "}
+              <FaPlus /> New Categories
+            </Link>
+          </div>
+        </div>
         {children}
       </body>
     </html>

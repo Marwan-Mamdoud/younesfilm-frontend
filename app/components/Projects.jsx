@@ -10,7 +10,7 @@ const Projects = () => {
   });
 
   return (
-    <div className="flex flex-wrap gap-10 mt-36 items-center justify-center p-5">
+    <div className="flex flex-wrap gap-10 items-start justify-start">
       {projects?.map((project) => {
         return (
           <ProjectModel

@@ -1,25 +1,49 @@
+"use client";
 import Link from "next/link";
+import { FaPlus } from "react-icons/fa";
 import Projects from "./components/Projects";
+import { useState } from "react";
+import Categories from "./components/Categories";
 
 export default function Home() {
+  const [hideProject, setHideProject] = useState(true);
   return (
-    <div className="mx-auto w-fit">
-      <div className="bg-slate-400 w-[100dvw] text-center text-white font-semibold text-4xl py-2">
-        Main Projects
-      </div>
-      <div className="w-[100dvw] flex items-center justify-center">
-        <Link href="/add" className="w-full">
-          <div className="bg-green-400 text-3xl w-full text-center text-white font-bold cursor-pointer">
-            ADD
+    <div className="w-full py-6 h-full font-sans">
+      <div className="flex justify-between max-w-[1100px] mx-auto  items-center"></div>
+      <div className="max-w-[1200px] mx-auto flex flex-col items-start justify-center gap-14">
+        <div className="flex items-center text-lg justify-center gap-6 pt-28">
+          <button
+            onClick={() => {
+              setHideProject(true);
+            }}
+            className={`${
+              hideProject ? "bg-white text-black" : ""
+            } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px] hover:bg-white hover:text-black duration-500 ease-in`}
+          >
+            {" "}
+            Projects
+          </button>
+          <button
+            onClick={() => {
+              setHideProject(false);
+            }}
+            className={`flex ${
+              !hideProject ? "bg-white text-black" : ""
+            } justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
+          >
+            {" "}
+            Categories
+          </button>
+        </div>
+        <div className="flex flex-col items-start justify-center gap-5">
+          <p className="text-5xl font-semibold">
+            {hideProject ? "Projects" : "Categories"}
+          </p>
+          <div className="flex flex-wrap items-start justify-start">
+            {hideProject ? <Projects /> : <Categories />}
           </div>
-        </Link>
-        <Link href="/edit" className="w-full">
-          <div className="bg-blue-400 text-3xl w-full text-center text-white font-bold cursor-pointer">
-            Edit
-          </div>
-        </Link>
+        </div>
       </div>
-      <Projects />
     </div>
   );
 }
