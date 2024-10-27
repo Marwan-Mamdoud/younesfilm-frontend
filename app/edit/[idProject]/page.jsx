@@ -46,7 +46,7 @@ const Page = ({ params }) => {
 
   const compressImage = async (file) => {
     const options = {
-      maxSizeMB: 1, // Compress to a max of 1MB per image
+      maxSizeMB: 0.5, // Compress to a max of 1MB per image
       maxWidthOrHeight: 1024, // Resize to a max width or height
       useWebWorker: true,
     };
