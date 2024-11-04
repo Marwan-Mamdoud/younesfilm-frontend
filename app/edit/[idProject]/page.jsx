@@ -1,49 +1,23 @@
 "use client";
-import { deleteImage, getProject, updateProject } from "@/lib/api";
-import Link from "next/link";
+import {
+  addProject,
+  deleteImage,
+  getCategories,
+  getProject,
+  updateProject,
+} from "@/lib/api";
 import imageCompression from "browser-image-compression";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
+
+import { FaPlusCircle } from "react-icons/fa";
+import { DeleteIcon } from "lucide-react";
 
 const Page = ({ params }) => {
   const { idProject } = params;
-  const [project, setProject] = useState();
-  const [ProjectName, setProjectName] = useState();
-  const [image, setImage] = useState();
-  const [ProjectDate, setProjectDate] = useState();
-  const [ProjectReview, setProjectReview] = useState();
-  const [ProjectImages, setProjectImages] = useState();
-  const [projectReviewBehind, setprojectReviewBehind] = useState();
-  const [ImagesprojectReviewBehind, setImagesprojectReviewBehind] = useState();
-  const [ProjectCrews, setProjectCrews] = useState();
-  const [ProjectVideo, setProjectVideo] = useState();
-  const [loading, setLoading] = useState(true);
-  const getproject = async () => {
-    try {
-      const data = await getProject(idProject);
-      setProject(data);
-      setProjectName(project.name);
-      setProjectDate(project.date);
-      setProjectReview(project.review);
-      setprojectReviewBehind(project.reviewBehindScenes);
-      setProjectImages(project.images);
-      setImagesprojectReviewBehind(project.imagesBehindScenes);
-      setProjectVideo(project.videos);
-      setProjectCrews(project.crews);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  useEffect(() => {
-    setLoading(true);
-    getproject();
-    setLoading(false);
-  }, [project]);
 
-  const [images, setImages] = useState([]);
-  const [imageScene, setImagesBehined] = useState([]);
-  const [IncaseInput, setIncaseInput] = useState([]);
-  const [VideoInput, setVideoInput] = useState([]);
-
+  const editorRef = useRef(null);
   const compressImage = async (file) => {
     const options = {
       maxSizeMB: 0.5, // Compress to a max of 1MB per image
@@ -52,320 +26,590 @@ const Page = ({ params }) => {
     };
     return await imageCompression(file, options);
   };
+  const [loading, setLoading] = useState(false);
+  const [numVideosInput, setNumVideosInput] = useState([]);
+  const [numCrewsInput, setNumCrewsInput] = useState([]);
+  const [numImgesInput, setNumImagesInput] = useState([]);
+  const [numImgesBehindTheSceneInput, setNumImagesBehindTheSceneInput] =
+    useState([]);
+  const [thumbnailImage, setThumbnail] = useState();
+  const [categories, setCategories] = useState();
+  const [Images, setImages] = useState([]);
+  const [Images12, setImages12] = useState([]);
+  const [ImagesBehindTheScene, setImagesBehindTheScene] = useState([]);
+  const [ImagesBehindTheScene1, setImagesBehindTheScene1] = useState([]);
+  const [editorContent, setEditorContent] = useState("");
+  const [date, setDate] = useState();
+  const [project, setProject] = useState();
 
-  const hundleForm = async (e) => {
+  useEffect(() => {
+    getCategories().then((res) => setCategories(res));
+    getProject(idProject).then((res) => {
+      setProject(res),
+        setDate(
+          new Date(res?.date).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })
+        ),
+        setImages12(res.images);
+      setImagesBehindTheScene1(res.imagesBehindScenes);
+      quill.root.innerHTML = res.reviewBehindScenes;
+    });
+    const quill = new Quill(editorRef.current, {
+      theme: "snow",
+      placeholder: "Type your content here...",
+    });
+
+    quill.on("text-change", () => {
+      setEditorContent(quill.root.innerHTML); // Store HTML content
+    });
+    console.log(project, "project from use Effect");
+  }, []);
+  const hundleSubmit = async (e) => {
     e.preventDefault();
-    const formdata = document.getElementById("form");
-    const form = new FormData(formdata);
-    // HUNDLE Crews ==========================================
+    // Your code that uses `document`
+
+    const form = document.getElementById("form");
+    const Form = new FormData(form);
     let crews = document.querySelectorAll(".crews");
-    crews = Array.from(crews)?.map((item) =>
+    let videos = document.querySelectorAll(".videos");
+
+    crews = Array.from(crews).map((item) =>
       item.value == "" ? null : item.value
     );
     crews = crews.filter((item) => item !== null);
-    crews = crews?.map((cr) => {
+    crews = crews.map((cr) => {
       return { name: cr.split(",")[0].trim(), job: cr.split(",")[1].trim() };
     });
-    // ======================================================
-    // HUNDLE Videos ===========================================
-    let videos = document.querySelectorAll(".videos");
-    videos = Array.from(videos)?.map((item) =>
+    crews = crews.filter((item) => item.job !== "");
+    videos = Array.from(videos).map((item) =>
       item.value == "" ? null : item.value
     );
-    videos = videos.filter((item) => item !== null);
-    //====================================================
-    //HUNDLE IMAGES=========================================
-    //=======================================================================
+    const ImagesUpdated = [];
+    console.log(Images);
 
-    const data = Object.fromEntries(form.entries());
-    data.Images = images;
+    for (let i = Images.length - 1; i > 0; i -= 2) {
+      ImagesUpdated.push({
+        before: Images[i - 1].before,
+        after: Images[i].after,
+      });
+    }
+
+    videos = videos.filter((item) => item !== null);
+    const data = Object.fromEntries(Form.entries());
+    data.thumbnailImage = thumbnailImage;
     data.crews = JSON.stringify(crews);
     data.videos = JSON.stringify(videos);
-    data.thumbnailImage = image;
-    data.ImagesBehindScenes = imageScene;
-    console.log(data, "form");
-    await updateProject(idProject, data);
+    data.date = date;
+    console.log(ImagesUpdated, "Images");
+
+    data.Images = JSON.stringify(ImagesUpdated);
+    data.ImagesBehindScenes = ImagesBehindTheScene;
+    data.reviewBehindScenes = editorContent;
+    setLoading(true);
+    console.log(data, date);
+    await updateProject(project?._id, data);
+    setLoading(false);
   };
-  if (loading) {
-    return <p>loading...</p>;
-  }
+
   return (
-    <form
-      action=""
-      onSubmit={hundleForm}
-      method="post"
-      id="form"
-      className="w-full mx-auto flex flex-col items-center justify-center"
-    >
-      <div className="flex justify-center items-center h-fit w-full ">
-        <div className="bg-green-400 text-3xl h-full mb-11 w-fit p-4 text-center text-white font-bold cursor-pointer">
-          Edit {ProjectName} Project
-        </div>
-        <div className="bg-blue-400 text-3xl h-full mb-11 w-fit p-4 text-center text-white font-bold cursor-pointer">
-          <Link href="/" className="w-full h-full">
-            Back to Projects
-          </Link>
-        </div>
-      </div>
-      <input
-        name="name"
-        type="text"
-        placeholder={`${ProjectName}`}
-        className="border-b-4 border-slate-500 outline-none h-10 w-[400px]  pl-2 text-2xl text-stone-600  my-5"
-      />
-      <label
-        htmlFor="thumbnail"
-        className="inline-block cursor-pointer border-none text-center  outline-none h-10 w-[400px]  pl-2 placeholder:text-2xl text-slate-600 text-3xl my-5"
-      >
-        Choose Thmbnail
-      </label>
-      {image ? (
-        <img
-          src={image}
-          alt="image"
-          className="w-20 h-20  mb-10 object-cover"
-        />
-      ) : (
-        <img
-          src={`${project?.thumbnail}`}
-          alt="image"
-          className="w-20 h-20  mb-10 object-cover"
-        />
-      )}
+    <>
+      <div className="w-full ">
+        <div className="w-full pt-40 mx-auto">
+          <form
+            onSubmit={hundleSubmit}
+            id="form"
+            className="w-7/12 mx-auto relative"
+            method="post"
+          >
+            <div className="flex flex-col items-start justify-start gap-2">
+              <label htmlFor="nameProject">Name of Project*</label>
+              <input
+                type="text"
+                name="name"
+                // required
+                defaultValue={project?.name}
+                id="nameProject"
+                placeholder="Enter name of project"
+                className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+              />
+            </div>
+            <div className="flex items-center mx-auto mt-10  justify-center">
+              <label
+                htmlFor="thumbnail"
+                className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
+              >
+                <img
+                  src={thumbnailImage || project?.thumbnail || ""}
+                  alt="thumbnail"
+                  className="w-full h-full object-cover"
+                />
+              </label>
+              <input
+                type="file"
+                // required
+                defaultValue={project?.thumbnail}
+                name="thumbnailImage"
+                id="thumbnail"
+                onChange={async (e) => {
+                  // setThumbnail(e.target.files[0]);
+                  const image = await compressImage(e.target.files[0]);
+                  console.log(image, "compress image");
+                  const reader = new FileReader();
+                  reader.readAsDataURL(image);
+                  reader.onload = () => {
+                    setThumbnail(reader.result);
+                    console.log(reader.result, "image after reader");
 
-      <input
-        name="thumbnailImage"
-        id="thumbnail"
-        onChange={async (e) => {
-          const image = await compressImage(e.target.files[0]);
-          const reader = new FileReader();
-          reader.readAsDataURL(image);
-          reader.onloadend = () => {
-            setImage(reader.result);
-            // This will be a base64 string
-          };
-          // setImage1(e.target.files[0]);
-          // setImage(URL.createObjectURL(e.target.files[0]));
-        }}
-        type="file"
-        placeholder="Enter Name Of The project"
-        className="border-b-4 cursor-pointer border-slate-500 outline-none h-10 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5 hidden "
-      />
-      <p className="bg-slate-500 text-white">
-        {new Date(ProjectDate).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })}
-      </p>
-      <input
-        name="date"
-        type="date"
-        placeholder={`${ProjectDate}`}
-        className="border-b-4 border-slate-500 outline-none h-10 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5"
-      />
-      {/* Video Fro project ================================================================================================================================= */}
-      {/* Video Fro project ================================================================================================================================= */}
-      {/* Video Fro project ================================================================================================================================= */}
-      {/* Video Fro project ================================================================================================================================= */}
-      {/* Video Fro project ================================================================================================================================= */}
-      <p className=" outline-none h-fit w-fit text-center pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5 cursor-pointer">
-        Video
-      </p>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setVideoInput((prev) => [...prev, 1]);
-        }}
-        className="text-green-600 bg-green-200 rounded-lg font-semibold tracking-widest py-3 px-4 uppercase"
-      >
-        add Input
-      </button>
-      <div className="grid grid-cols-2 gap-2 mx-auto my-5">
-        {ProjectVideo?.map((video, i) => {
-          return (
-            <input
-              type="text"
-              key={i}
-              placeholder={video}
-              className="videos border-b-2 border-slate-500 outline-none h-10 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-2xl"
-            />
-          );
-        })}
-        {VideoInput?.map((num) => (
-          <input
-            key={num}
-            type="text"
-            placeholder="Enter Your Video link"
-            className="videos border-b-2 border-slate-500 outline-none h-10 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-2xl"
-          />
-        ))}{" "}
-      </div>
-      {/* crew Fro project ================================================================================================================================= */}
-      {/* crew Fro project ================================================================================================================================= */}
-      {/* crew Fro project ================================================================================================================================= */}
-      {/* crew Fro project ================================================================================================================================= */}
-      {/* crew Fro project ================================================================================================================================= */}
-      <p className=" outline-none h-fit w-fit text-center pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5 cursor-pointer">
-        Crew
-      </p>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setIncaseInput((prev) => [...prev, 1]);
-        }}
-        className="text-green-600 bg-green-200 rounded-lg font-semibold tracking-widest py-3 px-4 uppercase"
-      >
-        add Input
-      </button>
-      <div className="grid grid-cols-2 gap-2 mx-auto my-5">
-        {ProjectCrews?.map((item, i) => {
-          return (
-            <input
-              key={i}
-              placeholder={`${item.name},${item.job}`}
-              type="text"
-              className="crews border-b-2 border-slate-500 outline-none  pl-2 placeholder:text-xl text-stone-600 text-2xl"
-            />
-          );
-        })}
-        {IncaseInput?.map((num) => (
-          <input
-            key={num}
-            type="text"
-            placeholder="Name , Job"
-            className="crews border-b-2 border-slate-500 outline-none  pl-2 placeholder:text-xl text-stone-600 text-2xl"
-          />
-        ))}
-      </div>
-      <textarea
-        name="review"
-        type="text"
-        placeholder={ProjectReview}
-        className="border-2 border-slate-500 outline-none h-24 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5"
-      ></textarea>
-      {/* images Fro project ================================================================================================================================= */}
-      {/* images Fro project ================================================================================================================================= */}
-      {/* images Fro project ================================================================================================================================= */}
-      {/* images Fro project ================================================================================================================================= */}
-      {/* images Fro project ================================================================================================================================= */}
-      <label
-        htmlFor="image"
-        className=" outline-none h-fit w-[400px] text-center pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5 cursor-pointer"
-      >
-        Choose Image For Project
-      </label>
-      <input
-        onChange={async (e) => {
-          const image = await compressImage(e.target.files[0]);
-          console.log(image, "compress image");
-          const reader = new FileReader();
-          reader.readAsDataURL(image);
-          reader.onload = () => {
-            setImages((prev) => [...prev, reader.result]);
-            console.log(
-              (prev) => [...prev, reader.result],
-              "image after reader"
-            );
-            // This will be a base64 string
-          };
-        }}
-        type="file"
-        id="image"
-        placeholder="Enter Name Of The project"
-        className="border-b-2 border-slate-500 outline-none hidden h-10 w-[400px] text-center pl-2 placeholder:text-2xl text-stone-600 text-2xl "
-      />
-      <div className="flex flex-wrap gap-2">
-        {ProjectImages?.map((image, i) => {
-          // const img = URL.createObjectURL(image);
-          // console.log(`http://localhost:4000/${image}`);
-          return (
-            <img
-              onClick={() => deleteImage(idProject, image)}
-              key={i}
-              alt="image"
-              src={image}
-              className="w-20 h-20 object-cover"
-            />
-          );
-        })}
-        {images?.map((image, i) => {
-          return (
-            <img
-              key={i}
-              src={image}
-              alt={image}
-              className="w-20 h-20 object-cover"
-            />
-          );
-        })}
-      </div>
-      {/* images Fro Behined the scene project ================================================================================================================================= */}
-      {/* images Fro Behined the scene project ================================================================================================================================= */}
-      {/* images Fro Behined the scene project ================================================================================================================================= */}
-      {/* images Fro Behined the scene project ================================================================================================================================= */}
-      {/* images Fro Behined the scene project ================================================================================================================================= */}
-      <label
-        htmlFor="imageScene"
-        className=" outline-none h-fit w-[400px] text-center pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5 cursor-pointer"
-      >
-        Choose Image For Behind Scenes Scetion
-      </label>
-      <input
-        onChange={async (e) => {
-          const image = await compressImage(e.target.files[0]);
-          console.log(image, "compress image");
-          const reader = new FileReader();
-          reader.readAsDataURL(image);
-          reader.onload = () => {
-            setImagesBehined((prev) => [...prev, reader.result]);
-            console.log(reader.result, "image after reader");
+                    // This will be a base64 string
+                  };
+                }}
+                className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
+              />
+            </div>
+            <div className="flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="dateProject">Date of Project*</label>
+              <input
+                type="date"
+                name="date"
+                defaultValue={project?.date}
+                // required
+                onChange={(e) => setDate(e.target.value)}
+                id="dateProject"
+                placeholder="Enter name of project"
+                className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+              />
+            </div>
+            <div className="flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="categoryProject">Category of Project*</label>
+              <select
+                name="category"
+                id="categoryProject"
+                required
+                // defaultValue={project?.category}
+                placeholder="Enter category of project"
+                className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+              >
+                <option disabled value="">
+                  Select category
+                </option>
+                {categories?.map((item, index) => (
+                  <option key={index} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="videoProject">Videos of Project*</label>
+              {project?.videos.map((item, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  id="videoProject"
+                  defaultValue={item}
+                  placeholder="Enter video of project"
+                  className="w-full videos rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+              ))}
 
-            // This will be a base64 string
-          };
-        }}
-        multiple
-        type="file"
-        id="imageScene"
-        placeholder="Enter Name Of The project"
-        className="border-b-2 hidden border-slate-500 outline-none h-10 w-[400px] text-center pl-2 placeholder:text-2xl text-stone-600 text-2xl"
-      />
-      <div className="flex flex-wrap gap-2">
-        {ImagesprojectReviewBehind?.map((image, i) => {
-          return (
-            <img
-              key={i}
-              onClick={() => deleteImage(idProject, image)}
-              src={`${image}`}
-              alt={image}
-              className="w-20 h-20 object-cover"
-            />
-          );
-        })}
-        {imageScene?.map((image, i) => {
-          return (
-            <img
-              key={i}
-              src={`${image}`}
-              alt={image}
-              className="w-20 h-20 object-cover"
-            />
-          );
-        })}
+              <FaPlusCircle
+                className="w-8 h-8 text-gray-400 absolute -top-1 -left-10 cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setNumVideosInput((prev) => [...prev, 1]);
+                }}
+              />
+              {numVideosInput.map((_, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  id="videoProject"
+                  placeholder="Enter video of project"
+                  className="w-full videos rounded-md bg-white mt-5 text-black px-5 h-10 outline-none"
+                />
+              ))}
+            </div>
+            <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
+              <FaPlusCircle
+                className="w-8 h-8 text-gray-400 absolute -top-1 -left-10 cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("done click", numCrewsInput);
+
+                  setNumCrewsInput((prev) => [...prev, 1]);
+                }}
+              />
+              <label htmlFor="crewsPorject">Crews of Project*</label>
+              <div className="grid grid-cols-2 gap-3 w-full">
+                {project?.crews.map((item, index) => {
+                  return (
+                    <input
+                      type="text"
+                      key={index}
+                      defaultValue={`${item.name},${item.job}`}
+                      id="crewsPorject"
+                      placeholder="Enter crew of project"
+                      className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
+                    />
+                  );
+                })}
+                {numCrewsInput.map((_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    id="crewsPorject"
+                    placeholder="Name , Job"
+                    className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="reviewPorject">Review of Project*</label>
+              <textarea
+                type="reviewPorject"
+                name="review"
+                defaultValue={project?.review}
+                id="reviewPorject"
+                placeholder="Enter Review of project"
+                className="w-full rounded-md bg-white h-28 text-black px-5 py-3 outline-none"
+              />
+            </div>
+            <div className="grid grid-cols-1 my-10 w-full  gap-5">
+              <div className="w-fit mx-auto relative text-white cursor-default  font-semibold text-3xl">
+                Before and After Images
+                <FaPlusCircle
+                  className="w-8 h-8 text-gray-400 absolute top-0 -left-10 cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+
+                    setNumImagesInput((prev) => [...prev, 1]);
+                  }}
+                />
+              </div>
+              {Images12.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center relative w-fit mx-auto   justify-center gap-5"
+                  >
+                    <DeleteIcon
+                      onClick={() => {
+                        deleteImage(project._id, item.before),
+                          setImages12((prev) =>
+                            prev.filter((img) => {
+                              return img.before !== item.before;
+                            })
+                          );
+                      }}
+                      className="absolute top-0 right-0 translate-x-full cursor-pointer  z-10 w-14 text-red-400 h-14"
+                    />
+                    <div className="-z-10 flex items-center w-full mt-10  justify-center">
+                      <label
+                        htmlFor="imageBefor"
+                        className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
+                      >
+                        <img
+                          src={item.before}
+                          alt="thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                      </label>
+
+                      <input
+                        type="file"
+                        id="imageBefor"
+                        onChange={async (e) => {
+                          e.preventDefault();
+                          const image = await compressImage(e.target.files[0]);
+                          console.log(image, "compress image");
+                          const reader = new FileReader();
+                          reader.readAsDataURL(image);
+                          reader.onload = () => {
+                            setImages((prev) => [
+                              ...prev,
+                              { before: reader.result },
+                            ]);
+
+                            // This will be a base64 string
+                          };
+                          console.log(Images, "image after reader");
+                        }}
+                        className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
+                      />
+                    </div>
+                    <div className="flex -z-10 items-center w-full mt-10  justify-center">
+                      <label
+                        htmlFor="imageAfter"
+                        className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
+                      >
+                        <img
+                          src={item.after}
+                          alt="thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                      </label>
+                      <input
+                        type="file"
+                        id="imageAfter"
+                        onChange={async (e) => {
+                          e.preventDefault();
+                          const image = await compressImage(e.target.files[0]);
+                          console.log(image, "compress image");
+                          const reader = new FileReader();
+                          reader.readAsDataURL(image);
+                          reader.onload = () => {
+                            setImages((prev) => [
+                              ...prev,
+                              { after: reader.result },
+                            ]);
+
+                            // This will be a base64 string
+                          };
+                          console.log(Images, "image after reader");
+                        }}
+                        className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+              {numImgesInput.map((_, index) => (
+                <div
+                  key={index}
+                  className="flex items-center w-fit mx-auto   justify-center gap-5"
+                >
+                  <div className="flex items-center w-full mt-10  justify-center">
+                    <label
+                      htmlFor={`imageBefor${index}`}
+                      className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
+                    >
+                      {Images[index] ? (
+                        <img
+                          src={Images[index]?.before}
+                          alt="thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span>Upload Image Before*</span>
+                      )}
+                    </label>
+                    <input
+                      type="file"
+                      required
+                      id={`imageBefor${index}`}
+                      onChange={async (e) => {
+                        e.preventDefault();
+                        const image = await compressImage(e.target.files[0]);
+                        console.log(image, "compress image");
+                        const reader = new FileReader();
+                        reader.readAsDataURL(image);
+                        reader.onload = () => {
+                          console.log(Images, "before ittrable");
+                          setImages((prev) => [
+                            ...prev,
+                            { before: reader.result },
+                          ]);
+
+                          // This will be a base64 string
+                        };
+                        console.log(
+                          Images,
+                          Images.length,
+                          index,
+                          "image after reader"
+                        );
+                      }}
+                      className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
+                    />
+                  </div>
+                  <div className="flex items-center w-full mt-10  justify-center">
+                    <label
+                      htmlFor={`imageAfter${index}`}
+                      className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
+                    >
+                      {Images[index + 1] ? (
+                        <img
+                          src={Images[index + 1]?.after}
+                          alt="thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span>Upload Image After*</span>
+                      )}
+                    </label>
+                    <input
+                      required
+                      type="file"
+                      id={`imageAfter${index}`}
+                      onChange={async (e) => {
+                        const image = await compressImage(e.target.files[0]);
+                        console.log(image, "compress image");
+                        const reader = new FileReader();
+                        reader.readAsDataURL(image);
+                        reader.onload = () => {
+                          setImages((prev) => [
+                            ...prev,
+                            { after: reader.result },
+                          ]);
+
+                          // This will be a base64 string
+                        };
+                        console.log(Images, index, "image after reader");
+                      }}
+                      className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col mt-5 items-center justify-center gap-3">
+              <div className="w-fit mx-auto relative text-white cursor-default mb-5  font-semibold text-3xl">
+                Behind The Scene Images
+                <FaPlusCircle
+                  className="w-8 h-8 text-gray-400 absolute top-0 -left-10 cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log("dine");
+
+                    setNumImagesBehindTheSceneInput((prev) => [...prev, 1]);
+                  }}
+                />
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-5">
+                {ImagesBehindTheScene1.map((item, index) => {
+                  return (
+                    <>
+                      <label
+                        key={index}
+                        htmlFor={`imageBehindTheScene`}
+                        className=" w-[250px] relative  h-[250px]  flex justify-center text-center items-center border-white border-2 border-dashed"
+                      >
+                        <img
+                          src="https://cdn.prod.website-files.com/66eaae371a3339a1873d1c70/66f2cae281b321c33c489471_bin-white.png"
+                          alt="delete"
+                          onClick={() => {
+                            deleteImage(project._id, item),
+                              setImagesBehindTheScene1((prev) =>
+                                prev.filter((img) => {
+                                  return img !== item;
+                                })
+                              );
+                          }}
+                          className="w-28 absolute top-1/2 translate-x-1/2 cursor-pointer -translate-y-1/2 right-1/2 h-28 z-50"
+                        />
+                        <img
+                          src={item}
+                          alt="thumbnail"
+                          className="w-full h-full object-cover"
+                        />
+                      </label>{" "}
+                      {/* <input
+                        onChange={async (e) => {
+                          const image = await compressImage(e.target.files[0]);
+                          console.log(image, "compress image");
+                          const reader = new FileReader();
+                          reader.readAsDataURL(image);
+                          reader.onload = () => {
+                            setImagesBehindTheScene((prev) => [
+                              ...prev,
+                              reader.result,
+                            ]);
+
+                            // This will be a base64 string
+                          };
+                        }}
+                        type="file"
+                        id="imageBehindTheScene"
+                        placeholder="Enter name of project"
+                        className="w-full hidden rounded-md bg-white text-black px-5 h-10 outline-none"
+                      /> */}
+                    </>
+                  );
+                })}
+                {numImgesBehindTheSceneInput.map((_, index) => {
+                  return (
+                    <div key={index} className="w-fit h-fit">
+                      <label
+                        htmlFor={`imageBehindTheScene${index}`}
+                        className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
+                      >
+                        {ImagesBehindTheScene[index] ? (
+                          <img
+                            src={ImagesBehindTheScene[index]}
+                            alt="thumbnail"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span>Behind The Scene Image*</span>
+                        )}
+                      </label>{" "}
+                      <input
+                        type="file"
+                        onChange={async (e) => {
+                          const image = await compressImage(e.target.files[0]);
+                          console.log(image, "compress image");
+                          const reader = new FileReader();
+                          reader.readAsDataURL(image);
+                          reader.onload = () => {
+                            setImagesBehindTheScene((prev) => [
+                              ...prev,
+                              reader.result,
+                            ]);
+
+                            // This will be a base64 string
+                          };
+                        }}
+                        id={`imageBehindTheScene${index}`}
+                        placeholder="Enter name of project"
+                        className="w-full hidden rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex flex-col items-start justify-start mt-10 gap-2">
+              <label htmlFor="">Review Behind The Scene of Project*</label>
+              <div
+                ref={editorRef}
+                style={{
+                  height: "200px",
+                  width: "100%",
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              ></div>
+            </div>
+            <button
+              type="submit"
+              className="bg-white text-black px-10 py-4 my-5 rounded-md hover:bg-white/50 duration-300"
+            >
+              Submit
+            </button>
+            <div
+              className={`${
+                loading ? "" : "hidden"
+              }  w-full h-[100dvh] absolute bottom-0 right-0 backdrop-blur-sm `}
+            >
+              <div
+                className={` bg-white w-[500px] shadow-lg  top-1/2 -translate-x-1/2 z-20 -right-1/2 -translate-y-1/2 text-black h-[300px] relative   flex flex-col items-center justify-center gap-5  rounded-lg`}
+              >
+                <img
+                  src="/laoding.png"
+                  alt="laoding"
+                  className="w-20 h-20 animate-spin  rounded-full"
+                ></img>
+                <p className="font-bold text-4xl tracking-wide">Loading...</p>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <textarea
-        name="reviewBehindScenes"
-        type="text"
-        placeholder={projectReviewBehind}
-        className="border-2 border-slate-500 outline-none h-24 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5"
-      ></textarea>
-      <button
-        type="submit"
-        className="py-[15px] px-[50px] bg-blue-500 text-white font-semibold font-mono text-3xl tracking-wide rounded-lg my-11"
-      >
-        Update
-      </button>
-    </form>
+    </>
   );
 };
 

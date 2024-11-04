@@ -4,8 +4,9 @@ import React, { useState } from "react";
 
 const Page = () => {
   const [name, setName] = useState();
-  const [loading, setLoading] = useState();
-  const onsubmit = async () => {
+  const [loading, setLoading] = useState(false);
+  const onsubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
     await addCategory(name);
     setLoading(false);
@@ -16,19 +17,22 @@ const Page = () => {
         <label htmlFor="input" className="block mb-2">
           Add new work Type*
         </label>
-        <input
-          type="text"
-          name="input"
-          onChange={(e) => setName(e.target.value)}
-          className=" outline-none rounded-md px-5 h-12 text-black/60 w-10/12"
-          placeholder="Enter new work type"
-        />
-        <button
-          onClick={onsubmit}
-          className="bg-white py-4 px-9 hover:bg-white/80 duration-300 rounded-md text-black block mt-6 items-end font-medium"
-        >
-          insert
-        </button>
+        <form onSubmit={onsubmit}>
+          <input
+            type="text"
+            name="input"
+            required
+            onChange={(e) => setName(e.target.value)}
+            className=" outline-none rounded-md px-5 h-12 text-black/60 w-10/12"
+            placeholder="Enter new work type"
+          />
+          <button
+            type="submit"
+            className="bg-white py-4 px-9 hover:bg-white/80 duration-300 rounded-md text-black block mt-6 items-end font-medium"
+          >
+            insert
+          </button>
+        </form>
         <div
           className={`${
             loading ? "" : "hidden"

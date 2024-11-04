@@ -11,7 +11,7 @@ export default function Home() {
     <div className="w-full py-6 h-full font-sans">
       <div className="flex justify-between max-w-[1100px] mx-auto  items-center"></div>
       <div className="max-w-[1200px] mx-auto flex flex-col items-start justify-center gap-14">
-        <div className="flex items-center text-lg justify-center gap-6 pt-28">
+        <div className="flex items-center text-lg justify-center gap-6 pt-40">
           <button
             onClick={() => {
               setHideProject(true);

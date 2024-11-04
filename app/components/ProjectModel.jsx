@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const ProjectModel = ({ id, thumbnail, name }) => {
   return (
-    <div className="w-[330px] h-[350px] relative rounded-lg my-10">
+    <div className="w-[330px] h-[350px] relative cursor-move rounded-lg my-10 block">
       <Link href={`/${id}`} className="">
         <img
           alt={name}
