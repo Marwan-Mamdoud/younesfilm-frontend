@@ -8,11 +8,9 @@ import {
 } from "@/lib/api";
 import imageCompression from "browser-image-compression";
 import React, { useEffect, useRef, useState } from "react";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
-
 import { FaPlusCircle } from "react-icons/fa";
 import { DeleteIcon } from "lucide-react";
+import QuillEditor from "@/app/add/quill";
 
 const Page = ({ params }) => {
   const { idProject } = params;
@@ -55,16 +53,9 @@ const Page = ({ params }) => {
         ),
         setImages12(res.images);
       setImagesBehindTheScene1(res.imagesBehindScenes);
-      quill.root.innerHTML = res.reviewBehindScenes;
-    });
-    const quill = new Quill(editorRef.current, {
-      theme: "snow",
-      placeholder: "Type your content here...",
+      setEditorContent(res.reviewBehindScenes);
     });
 
-    quill.on("text-change", () => {
-      setEditorContent(quill.root.innerHTML); // Store HTML content
-    });
     console.log(project, "project from use Effect");
   }, []);
   const hundleSubmit = async (e) => {
@@ -574,15 +565,7 @@ const Page = ({ params }) => {
             </div>
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
               <label htmlFor="">Review Behind The Scene of Project*</label>
-              <div
-                ref={editorRef}
-                style={{
-                  height: "200px",
-                  width: "100%",
-                  backgroundColor: "white",
-                  color: "black",
-                }}
-              ></div>
+              <QuillEditor value={editorContent} onChange={setEditorContent} />
             </div>
             <button
               type="submit"

@@ -2,52 +2,8 @@
 import { addProject, getCategories } from "@/lib/api";
 import imageCompression from "browser-image-compression";
 import React, { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-import "quill/dist/quill.snow.css"; // Import Quill CSS
-<link
-  href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
-  rel="stylesheet"
-/>;
-
 import { FaPlusCircle } from "react-icons/fa";
-
-const QuillEditor = ({ onChange }) => {
-  const editorRef = useRef();
-
-  useEffect(() => {
-    // Dynamically import Quill
-    const loadQuill = async () => {
-      const { Quill } = await import("quill"); // Importing Quill
-      const quill = new Quill(editorRef.current, {
-        theme: "snow",
-      });
-
-      quill.on("text-change", () => {
-        const content = quill.root.innerHTML;
-        onChange(content);
-      });
-
-      return () => {
-        quill.disable(); // Cleanup on unmount
-      };
-    };
-
-    loadQuill();
-  }, [onChange]);
-
-  return (
-    <div
-      ref={editorRef}
-      style={{
-        height: "200px",
-        width: "100%",
-        backgroundColor: "white",
-        color: "black",
-      }}
-    />
-  );
-};
-
+import QuillEditor from "./quill";
 const Page = () => {
   const compressImage = async (file) => {
     const options = {
@@ -68,15 +24,53 @@ const Page = () => {
   const [categories, setCategories] = useState();
   const [Images, setImages] = useState([]);
   const [ImagesBehindTheScene, setImagesBehindTheScene] = useState([]);
-  const [content, setContent] = useState("");
-
-  const handleChange = (value) => {
-    setContent(value);
-  };
+  const [editorContent, setEditorContent] = useState("");
+  // const [quillInstance, setQuillInstance] = useState(null); // Store Quill instance
 
   useEffect(() => {
-    getCategories().then((res) => setCategories(res));
+    getCategories().then((res) => {
+      setCategories(res);
+    });
+    // const quill = new Quill(editorRef.current, {
+    //   theme: "snow",
+    //   placeholder: "Type your content here...",
+    // });
+
+    // quill.on("text-change", () => {
+    //   setEditorContent(quill.root.innerHTML); // Store HTML content
+    // });
   }, []);
+
+  // useEffect(() => {
+  //   getCategories().then((res) => {
+  //     setCategories(res);
+  //   });
+
+  //   // Initialize Quill after component mounts and Quill is loaded
+  //   async function initializeQuill() {
+  //     if (
+  //       typeof window !== "undefined" &&
+  //       editorRef.current &&
+  //       !quillInstance
+  //     ) {
+  //       const QuillLib = (await Quill).default; // Ensure Quill is loaded
+  //       const quill = new QuillLib(editorRef.current, {
+  //         theme: "snow",
+  //         placeholder: "Type your content here...",
+  //       });
+
+  //       // Set up the change handler to update editor content
+  //       quill.on("text-change", () => {
+  //         setEditorContent(quill.root.innerHTML);
+  //       });
+
+  //       setQuillInstance(quill); // Store Quill instance to avoid re-initialization
+  //     }
+  //   }
+
+  //   initializeQuill();
+  // }, [quillInstance]);
+
   const hundleSubmit = async (e) => {
     e.preventDefault();
     // Your code that uses `document`
@@ -116,7 +110,7 @@ const Page = () => {
 
     data.Images = JSON.stringify(ImagesUpdated);
     data.ImagesBehindScenes = ImagesBehindTheScene;
-    data.reviewBehindScenes = content;
+    data.reviewBehindScenes = editorContent;
     setLoading(true);
     console.log(data);
     await addProject(data);
@@ -644,9 +638,21 @@ const Page = () => {
                 })}
               </div>
             </div>
+            {/* <div className="flex flex-col items-start justify-start mt-10 gap-2">
+              <label htmlFor="">Review Behind The Scene of Project*</label>
+              <div
+                ref={editorRef}
+                style={{
+                  height: "200px",
+                  width: "100%",
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              ></div>
+            </div> */}
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
               <label htmlFor="">Review Behind The Scene of Project*</label>
-              <QuillEditor onChange={handleChange} />
+              <QuillEditor value={editorContent} onChange={setEditorContent} />
             </div>
             <button
               type="submit"
