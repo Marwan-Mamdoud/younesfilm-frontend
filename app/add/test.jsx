@@ -3,6 +3,8 @@ import { addProject } from "@/lib/api";
 import Link from "next/link";
 import imageCompression from "browser-image-compression";
 import React, { useState } from "react";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
 
 const Page = () => {
   const [images, setImages] = useState([]);
@@ -11,6 +13,7 @@ const Page = () => {
   const [imageScene, setImagesBehined] = useState([]);
   const [IncaseInput, setIncaseInput] = useState([]);
   const [VideoInput, setVideoInput] = useState([]);
+  const editorRef = useRef(null);
 
   const compressImage = async (file) => {
     const options = {
@@ -21,6 +24,17 @@ const Page = () => {
     return await imageCompression(file, options);
   };
 
+  useEffect(() => {
+    getCategories().then((res) => setCategories(res));
+    const quill = new Quill(editorRef.current, {
+      theme: "snow",
+      placeholder: "Type your content here...",
+    });
+
+    quill.on("text-change", () => {
+      setEditorContent(quill.root.innerHTML); // Store HTML content
+    });
+  }, []);
   const hundleForm = async (e) => {
     e.preventDefault();
     const formdata = document.getElementById("form");
@@ -89,19 +103,19 @@ const Page = () => {
       <input
         name="thumbnailImage"
         id="thumbnail"
-          onChange={async (e) => {
-            setImage1(e.target.files[0]);
-            const image = await compressImage(e.target.files[0]);
-            console.log(image, "compress image");
-            const reader = new FileReader();
-            reader.readAsDataURL(image);
-            reader.onload = () => {
-              setImage(reader.result);
-              console.log(reader.result, "image after reader");
+        onChange={async (e) => {
+          setImage1(e.target.files[0]);
+          const image = await compressImage(e.target.files[0]);
+          console.log(image, "compress image");
+          const reader = new FileReader();
+          reader.readAsDataURL(image);
+          reader.onload = () => {
+            setImage(reader.result);
+            console.log(reader.result, "image after reader");
 
-              // This will be a base64 string
-            };
-          }}
+            // This will be a base64 string
+          };
+        }}
         type="file"
         placeholder="Enter Name Of The project"
         className="border-b-4 cursor-pointer border-slate-500 outline-none h-10 w-[400px]  pl-2 placeholder:text-2xl text-stone-600 text-3xl my-5 hidden "

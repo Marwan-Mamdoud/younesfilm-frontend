@@ -2,13 +2,53 @@
 import { addProject, getCategories } from "@/lib/api";
 import imageCompression from "browser-image-compression";
 import React, { useEffect, useRef, useState } from "react";
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+import "quill/dist/quill.snow.css"; // Import Quill CSS
+<link
+  href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
+  rel="stylesheet"
+/>;
 
 import { FaPlusCircle } from "react-icons/fa";
 
+const QuillEditor = ({ onChange }) => {
+  const editorRef = useRef();
+
+  useEffect(() => {
+    // Dynamically import Quill
+    const loadQuill = async () => {
+      const { Quill } = await import("quill"); // Importing Quill
+      const quill = new Quill(editorRef.current, {
+        theme: "snow",
+      });
+
+      quill.on("text-change", () => {
+        const content = quill.root.innerHTML;
+        onChange(content);
+      });
+
+      return () => {
+        quill.disable(); // Cleanup on unmount
+      };
+    };
+
+    loadQuill();
+  }, [onChange]);
+
+  return (
+    <div
+      ref={editorRef}
+      style={{
+        height: "200px",
+        width: "100%",
+        backgroundColor: "white",
+        color: "black",
+      }}
+    />
+  );
+};
+
 const Page = () => {
-  const editorRef = useRef(null);
   const compressImage = async (file) => {
     const options = {
       maxSizeMB: 0.5, // Compress to a max of 1MB per image
@@ -17,6 +57,7 @@ const Page = () => {
     };
     return await imageCompression(file, options);
   };
+
   const [loading, setLoading] = useState(false);
   const [numVideosInput, setNumVideosInput] = useState([]);
   const [numCrewsInput, setNumCrewsInput] = useState([]);
@@ -27,18 +68,14 @@ const Page = () => {
   const [categories, setCategories] = useState();
   const [Images, setImages] = useState([]);
   const [ImagesBehindTheScene, setImagesBehindTheScene] = useState([]);
-  const [editorContent, setEditorContent] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleChange = (value) => {
+    setContent(value);
+  };
 
   useEffect(() => {
     getCategories().then((res) => setCategories(res));
-    const quill = new Quill(editorRef.current, {
-      theme: "snow",
-      placeholder: "Type your content here...",
-    });
-
-    quill.on("text-change", () => {
-      setEditorContent(quill.root.innerHTML); // Store HTML content
-    });
   }, []);
   const hundleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +84,6 @@ const Page = () => {
     const form = document.getElementById("form");
     const Form = new FormData(form);
     let crews = document.querySelectorAll(".crews");
-    let videos = document.querySelectorAll(".videos");
 
     crews = Array.from(crews).map((item) =>
       item.value == "" ? null : item.value
@@ -57,6 +93,7 @@ const Page = () => {
       return { name: cr.split(",")[0].trim(), job: cr.split(",")[1].trim() };
     });
     crews = crews.filter((item) => item.job !== "");
+    let videos = document.querySelectorAll(".videos");
     videos = Array.from(videos).map((item) =>
       item.value == "" ? null : item.value
     );
@@ -79,7 +116,7 @@ const Page = () => {
 
     data.Images = JSON.stringify(ImagesUpdated);
     data.ImagesBehindScenes = ImagesBehindTheScene;
-    data.reviewBehindScenes = editorContent;
+    data.reviewBehindScenes = content;
     setLoading(true);
     console.log(data);
     await addProject(data);
@@ -175,11 +212,11 @@ const Page = () => {
               </select>
             </div>
             <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="videoProject">Videos of Project*</label>
+              <label htmlFor="">Videos of Project*</label>
 
               <input
                 type="text"
-                id="videoProject"
+                id=""
                 placeholder="Enter video of project"
                 className="w-full videos rounded-md bg-white text-black px-5 h-10 outline-none"
               />
@@ -195,7 +232,7 @@ const Page = () => {
                 <input
                   key={index}
                   type="text"
-                  id="videoProject"
+                  id=""
                   placeholder="Enter video of project"
                   className="w-full videos rounded-md bg-white mt-5 text-black px-5 h-10 outline-none"
                 />
@@ -211,110 +248,110 @@ const Page = () => {
                   setNumCrewsInput((prev) => [...prev, 1]);
                 }}
               />
-              <label htmlFor="crewsPorject">Crews of Project*</label>
+              <label htmlFor="">Crews of Project*</label>
               <div className="grid grid-cols-2 gap-3 w-full">
                 <input
                   type="text"
                   defaultValue="Agency,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Executive Producer,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Director,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="DOP,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Focus Puller,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Editor,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Colorist,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Ad,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Line Producer,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Gaffer,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Hair dresser,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Makeup Artist,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Dress by,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Casting Director,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Dancer,"
-                  id="crewsPorject"
+                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
@@ -322,7 +359,7 @@ const Page = () => {
                   <input
                     key={index}
                     type="text"
-                    id="crewsPorject"
+                    id=""
                     placeholder="Name , Job"
                     className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
@@ -609,15 +646,7 @@ const Page = () => {
             </div>
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
               <label htmlFor="">Review Behind The Scene of Project*</label>
-              <div
-                ref={editorRef}
-                style={{
-                  height: "200px",
-                  width: "100%",
-                  backgroundColor: "white",
-                  color: "black",
-                }}
-              ></div>
+              <QuillEditor onChange={handleChange} />
             </div>
             <button
               type="submit"
