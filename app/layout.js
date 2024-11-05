@@ -2,7 +2,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -58,6 +59,7 @@ export default function RootLayout({ children }) {
           </div>
         </div>
         {children}
+        <ToastContainer />
       </body>
     </html>
   );

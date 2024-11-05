@@ -1,6 +1,4 @@
 "use client";
-import Link from "next/link";
-import { FaPlus } from "react-icons/fa";
 import Projects from "./components/Projects";
 import { useState } from "react";
 import Categories from "./components/Categories";

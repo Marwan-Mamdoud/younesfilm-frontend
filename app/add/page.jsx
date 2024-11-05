@@ -1,9 +1,17 @@
 "use client";
 import { addProject, getCategories } from "@/lib/api";
 import imageCompression from "browser-image-compression";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import QuillEditor from "./quill";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
+import { toast } from "react-toastify";
+
 const Page = () => {
   const compressImage = async (file) => {
     const options = {
@@ -13,7 +21,7 @@ const Page = () => {
     };
     return await imageCompression(file, options);
   };
-
+  const [_, setRerender] = useState(false); // حالة وهمية لتحفيز إعادة التصيير
   const [loading, setLoading] = useState(false);
   const [numVideosInput, setNumVideosInput] = useState([]);
   const [numCrewsInput, setNumCrewsInput] = useState([]);
@@ -22,59 +30,19 @@ const Page = () => {
     useState([]);
   const [thumbnailImage, setThumbnail] = useState();
   const [categories, setCategories] = useState();
+  // const Images  = [];
   const [Images, setImages] = useState([]);
   const [ImagesBehindTheScene, setImagesBehindTheScene] = useState([]);
   const [editorContent, setEditorContent] = useState("");
-  // const [quillInstance, setQuillInstance] = useState(null); // Store Quill instance
 
   useEffect(() => {
     getCategories().then((res) => {
       setCategories(res);
     });
-    // const quill = new Quill(editorRef.current, {
-    //   theme: "snow",
-    //   placeholder: "Type your content here...",
-    // });
-
-    // quill.on("text-change", () => {
-    //   setEditorContent(quill.root.innerHTML); // Store HTML content
-    // });
   }, []);
-
-  // useEffect(() => {
-  //   getCategories().then((res) => {
-  //     setCategories(res);
-  //   });
-
-  //   // Initialize Quill after component mounts and Quill is loaded
-  //   async function initializeQuill() {
-  //     if (
-  //       typeof window !== "undefined" &&
-  //       editorRef.current &&
-  //       !quillInstance
-  //     ) {
-  //       const QuillLib = (await Quill).default; // Ensure Quill is loaded
-  //       const quill = new QuillLib(editorRef.current, {
-  //         theme: "snow",
-  //         placeholder: "Type your content here...",
-  //       });
-
-  //       // Set up the change handler to update editor content
-  //       quill.on("text-change", () => {
-  //         setEditorContent(quill.root.innerHTML);
-  //       });
-
-  //       setQuillInstance(quill); // Store Quill instance to avoid re-initialization
-  //     }
-  //   }
-
-  //   initializeQuill();
-  // }, [quillInstance]);
 
   const hundleSubmit = async (e) => {
     e.preventDefault();
-    // Your code that uses `document`
-
     const form = document.getElementById("form");
     const Form = new FormData(form);
     let crews = document.querySelectorAll(".crews");
@@ -84,36 +52,30 @@ const Page = () => {
     );
     crews = crews.filter((item) => item !== null);
     crews = crews.map((cr) => {
-      return { name: cr.split(",")[0].trim(), job: cr.split(",")[1].trim() };
+      return { name: cr.split(",")[0]?.trim(), job: cr.split(",")[1]?.trim() };
     });
+    crews = crews.filter((item) => item.job !== undefined);
+    crews = crews.filter((item) => item.job !== null);
     crews = crews.filter((item) => item.job !== "");
+    crews = crews.filter((item) => item.name !== "" || null || undefined);
+    console.log(crews);
+
     let videos = document.querySelectorAll(".videos");
     videos = Array.from(videos).map((item) =>
       item.value == "" ? null : item.value
     );
-    const ImagesUpdated = [];
-    console.log(Images);
-
-    for (let i = Images.length - 1; i > 0; i -= 2) {
-      ImagesUpdated.push({
-        before: Images[i - 1].before,
-        after: Images[i].after,
-      });
-    }
 
     videos = videos.filter((item) => item !== null);
     const data = Object.fromEntries(Form.entries());
     data.thumbnailImage = thumbnailImage;
     data.crews = JSON.stringify(crews);
     data.videos = JSON.stringify(videos);
-    console.log(ImagesUpdated, "Images");
-
-    data.Images = JSON.stringify(ImagesUpdated);
+    data.Images = JSON.stringify(Images);
     data.ImagesBehindScenes = ImagesBehindTheScene;
     data.reviewBehindScenes = editorContent;
     setLoading(true);
     console.log(data);
-    await addProject(data);
+    const res = await addProject(data);
     setLoading(false);
   };
 
@@ -145,6 +107,7 @@ const Page = () => {
               >
                 {thumbnailImage ? (
                   <img
+                    loading="lazy"
                     src={thumbnailImage || ""}
                     alt="thumbnail"
                     className="w-full h-full object-cover"
@@ -159,7 +122,6 @@ const Page = () => {
                 name="thumbnailImage"
                 id="thumbnail"
                 onChange={async (e) => {
-                  // setThumbnail(e.target.files[0]);
                   const image = await compressImage(e.target.files[0]);
                   console.log(image, "compress image");
                   const reader = new FileReader();
@@ -226,7 +188,6 @@ const Page = () => {
                 <input
                   key={index}
                   type="text"
-                  id=""
                   placeholder="Enter video of project"
                   className="w-full videos rounded-md bg-white mt-5 text-black px-5 h-10 outline-none"
                 />
@@ -247,105 +208,90 @@ const Page = () => {
                 <input
                   type="text"
                   defaultValue="Agency,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Executive Producer,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Director,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="DOP,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Focus Puller,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Editor,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Colorist,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Ad,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Line Producer,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Gaffer,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Hair dresser,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Makeup Artist,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Dress by,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Casting Director,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
                 <input
                   type="text"
                   defaultValue="Dancer,"
-                  id=""
                   placeholder="Enter crew of project"
                   className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                 />
@@ -353,7 +299,6 @@ const Page = () => {
                   <input
                     key={index}
                     type="text"
-                    id=""
                     placeholder="Name , Job"
                     className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
@@ -390,6 +335,7 @@ const Page = () => {
                   >
                     {Images[0] ? (
                       <img
+                        loading="lazy"
                         src={Images[0].before}
                         alt="thumbnail"
                         className="w-full h-full object-cover"
@@ -403,17 +349,16 @@ const Page = () => {
                     type="file"
                     id="imageBefor"
                     onChange={async (e) => {
-                      e.preventDefault();
+                      // e.preventDefault();
                       const image = await compressImage(e.target.files[0]);
-                      console.log(image, "compress image");
                       const reader = new FileReader();
                       reader.readAsDataURL(image);
                       reader.onload = () => {
-                        setImages((prev) => [
-                          ...prev,
-                          { before: reader.result },
-                        ]);
-
+                        // setImages((prev) => [
+                        Images[0] = {};
+                        Images[0].before = reader.result;
+                        // ]);
+                        setRerender((prev) => !prev);
                         // This will be a base64 string
                       };
                       console.log(Images, "image after reader");
@@ -426,9 +371,10 @@ const Page = () => {
                     htmlFor="imageAfter"
                     className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
                   >
-                    {Images[1] ? (
+                    {Images[0]?.after ? (
                       <img
-                        src={Images[1].after}
+                        loading="lazy"
+                        src={Images[0].after}
                         alt="thumbnail"
                         className="w-full h-full object-cover"
                       />
@@ -440,16 +386,16 @@ const Page = () => {
                     type="file"
                     id="imageAfter"
                     onChange={async (e) => {
-                      e.preventDefault();
+                      // e.preventDefault();
                       const image = await compressImage(e.target.files[0]);
                       console.log(image, "compress image");
                       const reader = new FileReader();
                       reader.readAsDataURL(image);
                       reader.onload = () => {
-                        setImages((prev) => [
-                          ...prev,
-                          { after: reader.result },
-                        ]);
+                        // setImages((prev) => [
+                        Images[0].after = reader.result;
+                        // ]);
+                        setRerender((prev) => !prev);
 
                         // This will be a base64 string
                       };
@@ -469,9 +415,10 @@ const Page = () => {
                       htmlFor={`imageBefor${index}`}
                       className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
                     >
-                      {Images[index + index + 2] ? (
+                      {Images[index + 1]?.before ? (
                         <img
-                          src={Images[index + index + 2]?.before}
+                          loading="lazy"
+                          src={Images[index + 1].before}
                           alt="thumbnail"
                           className="w-full h-full object-cover"
                         />
@@ -484,17 +431,17 @@ const Page = () => {
                       type="file"
                       id={`imageBefor${index}`}
                       onChange={async (e) => {
-                        e.preventDefault();
+                        // e.preventDefault();
                         const image = await compressImage(e.target.files[0]);
                         console.log(image, "compress image");
                         const reader = new FileReader();
                         reader.readAsDataURL(image);
                         reader.onload = () => {
                           console.log(Images, "before ittrable");
-                          setImages((prev) => [
-                            ...prev,
-                            { before: reader.result },
-                          ]);
+                          Images[index + 1] = {};
+                          Images[index + 1].before = reader.result;
+                          // ]);
+                          setRerender((prev) => !prev);
 
                           // This will be a base64 string
                         };
@@ -513,9 +460,10 @@ const Page = () => {
                       htmlFor={`imageAfter${index}`}
                       className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
                     >
-                      {Images[index + index + 3] ? (
+                      {Images[index + 1]?.after ? (
                         <img
-                          src={Images[index + index + 3]?.after}
+                          loading="lazy"
+                          src={`${Images[index + 1].after}`}
                           alt="thumbnail"
                           className="w-full h-full object-cover"
                         />
@@ -533,11 +481,9 @@ const Page = () => {
                         const reader = new FileReader();
                         reader.readAsDataURL(image);
                         reader.onload = () => {
-                          setImages((prev) => [
-                            ...prev,
-                            { after: reader.result },
-                          ]);
-
+                          Images[index + 1].after = reader.result;
+                          // ]);
+                          setRerender((prev) => !prev);
                           // This will be a base64 string
                         };
                         console.log(Images, index, "image after reader");
@@ -568,6 +514,7 @@ const Page = () => {
                 >
                   {ImagesBehindTheScene[0] ? (
                     <img
+                      loading="lazy"
                       src={ImagesBehindTheScene[0]}
                       alt="thumbnail"
                       className="w-full h-full object-cover"
@@ -583,11 +530,8 @@ const Page = () => {
                     const reader = new FileReader();
                     reader.readAsDataURL(image);
                     reader.onload = () => {
-                      setImagesBehindTheScene((prev) => [
-                        ...prev,
-                        reader.result,
-                      ]);
-
+                      ImagesBehindTheScene[0] = reader.result;
+                      setRerender((prev) => !prev);
                       // This will be a base64 string
                     };
                   }}
@@ -605,6 +549,7 @@ const Page = () => {
                       >
                         {ImagesBehindTheScene[index + 1] ? (
                           <img
+                            loading="lazy"
                             src={ImagesBehindTheScene[index + 1]}
                             alt="thumbnail"
                             className="w-full h-full object-cover"
@@ -621,11 +566,8 @@ const Page = () => {
                           const reader = new FileReader();
                           reader.readAsDataURL(image);
                           reader.onload = () => {
-                            setImagesBehindTheScene((prev) => [
-                              ...prev,
-                              reader.result,
-                            ]);
-
+                            ImagesBehindTheScene[index + 1] = reader.result;
+                            setRerender((prev) => !prev);
                             // This will be a base64 string
                           };
                         }}
@@ -638,18 +580,6 @@ const Page = () => {
                 })}
               </div>
             </div>
-            {/* <div className="flex flex-col items-start justify-start mt-10 gap-2">
-              <label htmlFor="">Review Behind The Scene of Project*</label>
-              <div
-                ref={editorRef}
-                style={{
-                  height: "200px",
-                  width: "100%",
-                  backgroundColor: "white",
-                  color: "black",
-                }}
-              ></div>
-            </div> */}
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
               <label htmlFor="">Review Behind The Scene of Project*</label>
               <QuillEditor value={editorContent} onChange={setEditorContent} />
@@ -669,10 +599,11 @@ const Page = () => {
                 className={` bg-white w-[500px] shadow-lg  top-1/2 -translate-x-1/2 z-20 -right-1/2 -translate-y-1/2 text-black h-[300px] relative   flex flex-col items-center justify-center gap-5  rounded-lg`}
               >
                 <img
+                  loading="lazy"
                   src="/laoding.png"
                   alt="laoding"
                   className="w-20 h-20 animate-spin  rounded-full"
-                ></img>
+                />
                 <p className="font-bold text-4xl tracking-wide">Loading...</p>
               </div>
             </div>

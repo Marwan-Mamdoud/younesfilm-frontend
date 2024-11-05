@@ -11,7 +11,7 @@ const Categories = () => {
     getCategories().then((data) => {
       setCategories(data);
     });
-  }, [categories]);
+  }, []);
   const editCategory = async (e) => {
     e.preventDefault();
     setEdit(false);

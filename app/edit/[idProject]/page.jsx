@@ -1,13 +1,12 @@
 "use client";
 import {
-  addProject,
   deleteImage,
   getCategories,
   getProject,
   updateProject,
 } from "@/lib/api";
 import imageCompression from "browser-image-compression";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { DeleteIcon } from "lucide-react";
 import QuillEditor from "@/app/add/quill";
@@ -15,7 +14,6 @@ import QuillEditor from "@/app/add/quill";
 const Page = ({ params }) => {
   const { idProject } = params;
 
-  const editorRef = useRef(null);
   const compressImage = async (file) => {
     const options = {
       maxSizeMB: 0.5, // Compress to a max of 1MB per image
@@ -34,6 +32,7 @@ const Page = ({ params }) => {
   const [categories, setCategories] = useState();
   const [Images, setImages] = useState([]);
   const [Images12, setImages12] = useState([]);
+  const [_, setRerender] = useState(false);
   const [ImagesBehindTheScene, setImagesBehindTheScene] = useState([]);
   const [ImagesBehindTheScene1, setImagesBehindTheScene1] = useState([]);
   const [editorContent, setEditorContent] = useState("");
@@ -72,21 +71,16 @@ const Page = ({ params }) => {
     );
     crews = crews.filter((item) => item !== null);
     crews = crews.map((cr) => {
-      return { name: cr.split(",")[0].trim(), job: cr.split(",")[1].trim() };
+      return { name: cr.split(",")[0].trim(), job: cr.split(",")[1]?.trim() };
     });
     crews = crews.filter((item) => item.job !== "");
     videos = Array.from(videos).map((item) =>
       item.value == "" ? null : item.value
     );
-    const ImagesUpdated = [];
-    console.log(Images);
-
-    for (let i = Images.length - 1; i > 0; i -= 2) {
-      ImagesUpdated.push({
-        before: Images[i - 1].before,
-        after: Images[i].after,
-      });
-    }
+    crews = crews.filter((item) => item.job !== undefined);
+    crews = crews.filter((item) => item.job !== null);
+    crews = crews.filter((item) => item.job !== "");
+    crews = crews.filter((item) => item.name !== "" || null || undefined);
 
     videos = videos.filter((item) => item !== null);
     const data = Object.fromEntries(Form.entries());
@@ -94,14 +88,15 @@ const Page = ({ params }) => {
     data.crews = JSON.stringify(crews);
     data.videos = JSON.stringify(videos);
     data.date = date;
-    console.log(ImagesUpdated, "Images");
 
-    data.Images = JSON.stringify(ImagesUpdated);
+    data.Images = JSON.stringify(Images);
     data.ImagesBehindScenes = ImagesBehindTheScene;
     data.reviewBehindScenes = editorContent;
     setLoading(true);
     console.log(data, date);
-    await updateProject(project?._id, data);
+    const res = await updateProject(project?._id, data);
+    console.log(res);
+
     setLoading(false);
   };
 
@@ -120,7 +115,6 @@ const Page = ({ params }) => {
               <input
                 type="text"
                 name="name"
-                // required
                 defaultValue={project?.name}
                 id="nameProject"
                 placeholder="Enter name of project"
@@ -140,12 +134,10 @@ const Page = ({ params }) => {
               </label>
               <input
                 type="file"
-                // required
                 defaultValue={project?.thumbnail}
                 name="thumbnailImage"
                 id="thumbnail"
                 onChange={async (e) => {
-                  // setThumbnail(e.target.files[0]);
                   const image = await compressImage(e.target.files[0]);
                   console.log(image, "compress image");
                   const reader = new FileReader();
@@ -166,7 +158,6 @@ const Page = ({ params }) => {
                 type="date"
                 name="date"
                 defaultValue={project?.date}
-                // required
                 onChange={(e) => setDate(e.target.value)}
                 id="dateProject"
                 placeholder="Enter name of project"
@@ -179,7 +170,7 @@ const Page = ({ params }) => {
                 name="category"
                 id="categoryProject"
                 required
-                // defaultValue={project?.category}
+                defaultValue={project?.category}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
@@ -309,28 +300,6 @@ const Page = ({ params }) => {
                           className="w-full h-full object-cover"
                         />
                       </label>
-
-                      <input
-                        type="file"
-                        id="imageBefor"
-                        onChange={async (e) => {
-                          e.preventDefault();
-                          const image = await compressImage(e.target.files[0]);
-                          console.log(image, "compress image");
-                          const reader = new FileReader();
-                          reader.readAsDataURL(image);
-                          reader.onload = () => {
-                            setImages((prev) => [
-                              ...prev,
-                              { before: reader.result },
-                            ]);
-
-                            // This will be a base64 string
-                          };
-                          console.log(Images, "image after reader");
-                        }}
-                        className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
-                      />
                     </div>
                     <div className="flex -z-10 items-center w-full mt-10  justify-center">
                       <label
@@ -343,27 +312,6 @@ const Page = ({ params }) => {
                           className="w-full h-full object-cover"
                         />
                       </label>
-                      <input
-                        type="file"
-                        id="imageAfter"
-                        onChange={async (e) => {
-                          e.preventDefault();
-                          const image = await compressImage(e.target.files[0]);
-                          console.log(image, "compress image");
-                          const reader = new FileReader();
-                          reader.readAsDataURL(image);
-                          reader.onload = () => {
-                            setImages((prev) => [
-                              ...prev,
-                              { after: reader.result },
-                            ]);
-
-                            // This will be a base64 string
-                          };
-                          console.log(Images, "image after reader");
-                        }}
-                        className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
-                      />
                     </div>
                   </div>
                 );
@@ -378,9 +326,9 @@ const Page = ({ params }) => {
                       htmlFor={`imageBefor${index}`}
                       className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
                     >
-                      {Images[index] ? (
+                      {Images[index]?.before ? (
                         <img
-                          src={Images[index]?.before}
+                          src={Images[index].before}
                           alt="thumbnail"
                           className="w-full h-full object-cover"
                         />
@@ -400,11 +348,9 @@ const Page = ({ params }) => {
                         reader.readAsDataURL(image);
                         reader.onload = () => {
                           console.log(Images, "before ittrable");
-                          setImages((prev) => [
-                            ...prev,
-                            { before: reader.result },
-                          ]);
-
+                          Images[index] = {};
+                          Images[index].before = reader.result;
+                          setRerender((prev) => !prev);
                           // This will be a base64 string
                         };
                         console.log(
@@ -419,12 +365,12 @@ const Page = ({ params }) => {
                   </div>
                   <div className="flex items-center w-full mt-10  justify-center">
                     <label
-                      htmlFor={`imageAfter${index}`}
+                      htmlFor={`imageAfter${index + 0.5}`}
                       className=" w-[250px] h-[250px] cursor-pointer flex justify-center text-center items-center border-white border-2 border-dashed"
                     >
-                      {Images[index + 1] ? (
+                      {Images[index]?.after ? (
                         <img
-                          src={Images[index + 1]?.after}
+                          src={Images[index].after}
                           alt="thumbnail"
                           className="w-full h-full object-cover"
                         />
@@ -435,17 +381,15 @@ const Page = ({ params }) => {
                     <input
                       required
                       type="file"
-                      id={`imageAfter${index}`}
+                      id={`imageAfter${index + 0.5}`}
                       onChange={async (e) => {
                         const image = await compressImage(e.target.files[0]);
                         console.log(image, "compress image");
                         const reader = new FileReader();
                         reader.readAsDataURL(image);
                         reader.onload = () => {
-                          setImages((prev) => [
-                            ...prev,
-                            { after: reader.result },
-                          ]);
+                          Images[index].after = reader.result;
+                          setRerender((prev) => !prev);
 
                           // This will be a base64 string
                         };
@@ -473,52 +417,30 @@ const Page = ({ params }) => {
               <div className="flex flex-wrap items-center justify-center gap-5">
                 {ImagesBehindTheScene1.map((item, index) => {
                   return (
-                    <>
-                      <label
-                        key={index}
-                        htmlFor={`imageBehindTheScene`}
-                        className=" w-[250px] relative  h-[250px]  flex justify-center text-center items-center border-white border-2 border-dashed"
-                      >
-                        <img
-                          src="https://cdn.prod.website-files.com/66eaae371a3339a1873d1c70/66f2cae281b321c33c489471_bin-white.png"
-                          alt="delete"
-                          onClick={() => {
-                            deleteImage(project._id, item),
-                              setImagesBehindTheScene1((prev) =>
-                                prev.filter((img) => {
-                                  return img !== item;
-                                })
-                              );
-                          }}
-                          className="w-28 absolute top-1/2 translate-x-1/2 cursor-pointer -translate-y-1/2 right-1/2 h-28 z-50"
-                        />
-                        <img
-                          src={item}
-                          alt="thumbnail"
-                          className="w-full h-full object-cover"
-                        />
-                      </label>{" "}
-                      {/* <input
-                        onChange={async (e) => {
-                          const image = await compressImage(e.target.files[0]);
-                          console.log(image, "compress image");
-                          const reader = new FileReader();
-                          reader.readAsDataURL(image);
-                          reader.onload = () => {
-                            setImagesBehindTheScene((prev) => [
-                              ...prev,
-                              reader.result,
-                            ]);
-
-                            // This will be a base64 string
-                          };
+                    <label
+                      key={index}
+                      htmlFor={`imageBehindTheScene`}
+                      className=" w-[250px] relative  h-[250px]  flex justify-center text-center items-center border-white border-2 border-dashed"
+                    >
+                      <img
+                        src="https://cdn.prod.website-files.com/66eaae371a3339a1873d1c70/66f2cae281b321c33c489471_bin-white.png"
+                        alt="delete"
+                        onClick={() => {
+                          deleteImage(project._id, item),
+                            setImagesBehindTheScene1((prev) =>
+                              prev.filter((img) => {
+                                return img !== item;
+                              })
+                            );
                         }}
-                        type="file"
-                        id="imageBehindTheScene"
-                        placeholder="Enter name of project"
-                        className="w-full hidden rounded-md bg-white text-black px-5 h-10 outline-none"
-                      /> */}
-                    </>
+                        className="w-28 absolute top-1/2 translate-x-1/2 cursor-pointer -translate-y-1/2 right-1/2 h-28 z-50"
+                      />
+                      <img
+                        src={item}
+                        alt="thumbnail"
+                        className="w-full h-full object-cover"
+                      />
+                    </label>
                   );
                 })}
                 {numImgesBehindTheSceneInput.map((_, index) => {
@@ -546,11 +468,8 @@ const Page = ({ params }) => {
                           const reader = new FileReader();
                           reader.readAsDataURL(image);
                           reader.onload = () => {
-                            setImagesBehindTheScene((prev) => [
-                              ...prev,
-                              reader.result,
-                            ]);
-
+                            ImagesBehindTheScene[index] = reader.result;
+                            setRerender((prev) => !prev);
                             // This will be a base64 string
                           };
                         }}
