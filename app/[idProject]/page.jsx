@@ -47,7 +47,7 @@ const Page = ({ params }) => {
           className="w-full h-full object-cover -z-10  absolute"
           alt="image"
         />
-        <p className="text-white uppercase text-6xl tracking-wider cursor-default font-bold absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+        <p className="text-white uppercase text-6xl text-center tracking-wider cursor-default font-bold absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
           {project?.name}
         </p>
       </div>
