@@ -93,7 +93,9 @@ const Page = () => {
             method="post"
           >
             <div className="flex flex-col items-start justify-start gap-2">
-              <label htmlFor="nameProject">Name of Project*</label>
+              <label htmlFor="nameProject">
+                Name of Project <span className="text-red-600 text-xl"> *</span>
+              </label>
               <input
                 type="text"
                 name="name"
@@ -116,7 +118,10 @@ const Page = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span>Upload thumbnail*</span>
+                  <span>
+                    Upload thumbnail
+                    <span className="text-red-600 text-xl"> *</span>
+                  </span>
                 )}
               </label>
               <input
@@ -125,6 +130,13 @@ const Page = () => {
                 name="thumbnailImage"
                 id="thumbnail"
                 onChange={async (e) => {
+                  if (!e.target.files[0].type.startsWith("image/")) {
+                    toast.warn("Please upload only image files.");
+                    e.target.value = null;
+                    setThumbnail(null);
+                    return;
+                    // Clear the input if it's not an image
+                  }
                   const image = await compressImage(e.target.files[0]);
                   console.log(image, "compress image");
                   const reader = new FileReader();
@@ -141,7 +153,9 @@ const Page = () => {
               />
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="dateProject">Date of Project*</label>
+              <label htmlFor="dateProject">
+                Date of Project <span className="text-red-600 text-xl"> *</span>
+              </label>
               <input
                 type="date"
                 name="date"
@@ -152,7 +166,10 @@ const Page = () => {
               />
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="categoryProject">Category of Project*</label>
+              <label htmlFor="categoryProject">
+                Category of Project{" "}
+                <span className="text-red-600 text-xl"> *</span>
+              </label>
               <select
                 name="category"
                 id="categoryProject"
@@ -172,7 +189,7 @@ const Page = () => {
               </select>
             </div>
             <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="">Videos of Project*</label>
+              <label htmlFor="">Videos of Project</label>
 
               <input
                 type="text"
@@ -207,7 +224,7 @@ const Page = () => {
                   setNumCrewsInput((prev) => [...prev, 1]);
                 }}
               />
-              <label htmlFor="">Crews of Project*</label>
+              <label htmlFor="">Crews of Project</label>
               <div className="grid grid-cols-2 gap-3 w-full">
                 <input
                   type="text"
@@ -310,7 +327,7 @@ const Page = () => {
               </div>
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="reviewPorject">Review of Project*</label>
+              <label htmlFor="reviewPorject">Review of Project</label>
               <textarea
                 type="reviewPorject"
                 name="review"
@@ -354,6 +371,15 @@ const Page = () => {
                     id="imageBefor"
                     onChange={async (e) => {
                       // e.preventDefault();
+                      if (!e.target.files[0].type.startsWith("image/")) {
+                        toast.warn("Please upload only image files.");
+                        e.target.value = "";
+                        Images[0] = null;
+                        setRerender((prev) => !prev);
+
+                        return;
+                        // Clear the input if it's not an image
+                      }
                       const image = await compressImage(e.target.files[0]);
                       const reader = new FileReader();
                       reader.readAsDataURL(image);
@@ -388,13 +414,25 @@ const Page = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span>Upload Image After*</span>
+                      <span>
+                        Upload Image After{" "}
+                        <span className="text-red-600 text-xl"> *</span>
+                      </span>
                     )}
                   </label>
                   <input
                     type="file"
                     id="imageAfter"
                     onChange={async (e) => {
+                      if (!e.target.files[0].type.startsWith("image/")) {
+                        toast.warn("Please upload only image files.");
+                        e.target.value = "";
+                        Images[0].after = null;
+                        setRerender((prev) => !prev);
+
+                        return;
+                        // Clear the input if it's not an image
+                      }
                       // e.preventDefault();
                       const image = await compressImage(e.target.files[0]);
                       console.log(image, "compress image");
@@ -444,6 +482,15 @@ const Page = () => {
                       id={`imageBefor${index}`}
                       onChange={async (e) => {
                         // e.preventDefault();
+                        if (!e.target.files[0].type.startsWith("image/")) {
+                          toast.warn("Please upload only image files.");
+                          e.target.value = null;
+                          Images[index + 1] = null;
+                          setRerender((prev) => !prev);
+
+                          return;
+                          // Clear the input if it's not an image
+                        }
                         const image = await compressImage(e.target.files[0]);
                         console.log(image, "compress image");
                         const reader = new FileReader();
@@ -484,7 +531,10 @@ const Page = () => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <span>Upload Image After*</span>
+                        <span>
+                          Upload Image After{" "}
+                          <span className="text-red-600 text-xl"> *</span>
+                        </span>
                       )}
                     </label>
                     <input
@@ -492,6 +542,15 @@ const Page = () => {
                       type="file"
                       id={`imageAfter${index}`}
                       onChange={async (e) => {
+                        if (!e.target.files[0].type.startsWith("image/")) {
+                          toast.warn("Please upload only image files.");
+                          e.target.value = null;
+                          Images[index + 1].after = null;
+                          setRerender((prev) => !prev);
+
+                          return;
+                          // Clear the input if it's not an image
+                        }
                         const image = await compressImage(e.target.files[0]);
                         console.log(image, "compress image");
                         const reader = new FileReader();
@@ -546,6 +605,14 @@ const Page = () => {
                 </label>{" "}
                 <input
                   onChange={async (e) => {
+                    if (!e.target.files[0].type.startsWith("image/")) {
+                      toast.warn("Please upload only image files.");
+                      e.target.value = "";
+                      setRerender((prev) => !prev);
+
+                      return;
+                      // Clear the input if it's not an image
+                    }
                     const image = await compressImage(e.target.files[0]);
                     console.log(image, "compress image");
                     const reader = new FileReader();
@@ -581,12 +648,19 @@ const Page = () => {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span>Behind The Scene Image*</span>
+                          <span>Behind The Scene Image</span>
                         )}
                       </label>{" "}
                       <input
                         type="file"
                         onChange={async (e) => {
+                          if (!e.target.files[0].type.startsWith("image/")) {
+                            toast.warn("Please upload only image files.");
+                            e.target.value = "";
+                            setRerender((prev) => !prev);
+                            return;
+                            // Clear the input if it's not an image
+                          }
                           const image = await compressImage(e.target.files[0]);
                           console.log(image, "compress image");
                           const reader = new FileReader();
@@ -612,7 +686,7 @@ const Page = () => {
               </div>
             </div>
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
-              <label htmlFor="">Review Behind The Scene of Project*</label>
+              <label htmlFor="">Review Behind The Scene of Project</label>
               <QuillEditor value={editorContent} onChange={setEditorContent} />
             </div>
             <button
@@ -624,7 +698,7 @@ const Page = () => {
             <div
               className={`${
                 loading ? "" : "hidden"
-              }  w-full h-[100dvh] absolute bottom-0 right-0 backdrop-blur-sm `}
+              }  w-full h-[100dvh] fixed z-50 bottom-0 right-0 backdrop-blur-sm `}
             >
               <div
                 className={` bg-white w-[500px] shadow-lg  top-1/2 -translate-x-1/2 z-20 -right-1/2 -translate-y-1/2 text-black h-[300px] relative   flex flex-col items-center justify-center gap-5  rounded-lg`}

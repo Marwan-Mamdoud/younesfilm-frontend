@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { DeleteIcon } from "lucide-react";
 import QuillEditor from "@/app/add/quill";
+import { toast } from "react-toastify";
 
 const Page = ({ params }) => {
   const { idProject } = params;
@@ -111,7 +112,9 @@ const Page = ({ params }) => {
             method="post"
           >
             <div className="flex flex-col items-start justify-start gap-2">
-              <label htmlFor="nameProject">Name of Project*</label>
+              <label htmlFor="nameProject">
+                Name of Project<span className="text-red-600 text-xl"> *</span>
+              </label>
               <input
                 type="text"
                 name="name"
@@ -138,6 +141,13 @@ const Page = ({ params }) => {
                 name="thumbnailImage"
                 id="thumbnail"
                 onChange={async (e) => {
+                  if (!e.target.files[0].type.startsWith("image/")) {
+                    toast.warn("Please upload only image files.");
+                    e.target.value = "";
+                    setThumbnail("");
+                    return;
+                    // Clear the input if it's not an image
+                  }
                   const image = await compressImage(e.target.files[0]);
                   console.log(image, "compress image");
                   const reader = new FileReader();
@@ -155,7 +165,9 @@ const Page = ({ params }) => {
               />
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="dateProject">Date of Project*</label>
+              <label htmlFor="dateProject">
+                Date of Project <span className="text-red-600 text-xl"> *</span>
+              </label>
               <input
                 type="date"
                 name="date"
@@ -167,7 +179,10 @@ const Page = ({ params }) => {
               />
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="categoryProject">Category of Project*</label>
+              <label htmlFor="categoryProject">
+                Category of Project{" "}
+                <span className="text-red-600 text-xl"> *</span>
+              </label>
               <select
                 name="category"
                 id="categoryProject"
@@ -187,7 +202,7 @@ const Page = ({ params }) => {
               </select>
             </div>
             <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="videoProject">Videos of Project*</label>
+              <label htmlFor="videoProject">Videos of Project</label>
               {project?.videos.map((item, index) => (
                 <input
                   key={index}
@@ -226,7 +241,7 @@ const Page = ({ params }) => {
                   setNumCrewsInput((prev) => [...prev, 1]);
                 }}
               />
-              <label htmlFor="crewsPorject">Crews of Project*</label>
+              <label htmlFor="crewsPorject">Crews of Project</label>
               <div className="grid grid-cols-2 gap-3 w-full">
                 {project?.crews.map((item, index) => {
                   return (
@@ -252,7 +267,7 @@ const Page = ({ params }) => {
               </div>
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="reviewPorject">Review of Project*</label>
+              <label htmlFor="reviewPorject">Review of Project</label>
               <textarea
                 type="reviewPorject"
                 name="review"
@@ -335,7 +350,7 @@ const Page = ({ params }) => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <span>Upload Image Before*</span>
+                        <span>Upload Image Before</span>
                       )}
                     </label>
                     <input
@@ -343,6 +358,16 @@ const Page = ({ params }) => {
                       required
                       id={`imageBefor${index}`}
                       onChange={async (e) => {
+                        if (!e.target.files[0].type.startsWith("image/")) {
+                          toast.warn("Please upload only image files.");
+                          e.target.value = "";
+                          Images[index] = null;
+                          Images[index].before = null;
+                          setRerender((prev) => !prev);
+
+                          return;
+                          // Clear the input if it's not an image
+                        }
                         e.preventDefault();
                         const image = await compressImage(e.target.files[0]);
                         console.log(image, "compress image");
@@ -381,7 +406,10 @@ const Page = ({ params }) => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <span>Upload Image After*</span>
+                        <span>
+                          Upload Image After
+                          <span className="text-red-600 text-xl"> *</span>
+                        </span>
                       )}
                     </label>
                     <input
@@ -389,6 +417,14 @@ const Page = ({ params }) => {
                       type="file"
                       id={`imageAfter${index + 0.5}`}
                       onChange={async (e) => {
+                        if (!e.target.files[0].type.startsWith("image/")) {
+                          toast.warn("Please upload only image files.");
+                          e.target.value = "";
+                          Images[index].after = null;
+                          setRerender((prev) => !prev);
+                          return;
+                          // Clear the input if it's not an image
+                        }
                         const image = await compressImage(e.target.files[0]);
                         console.log(image, "compress image");
                         const reader = new FileReader();
@@ -443,7 +479,7 @@ const Page = ({ params }) => {
                               })
                             );
                         }}
-                        className="w-28 absolute top-1/2 translate-x-1/2 cursor-pointer -translate-y-1/2 right-1/2 h-28 z-50"
+                        className="w-20 absolute top-1/2 translate-x-1/2 cursor-pointer -translate-y-1/2 right-1/2 h-20 z-50"
                       />
                       <img
                         src={item}
@@ -467,12 +503,19 @@ const Page = ({ params }) => {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span>Behind The Scene Image*</span>
+                          <span>Behind The Scene Image</span>
                         )}
                       </label>{" "}
                       <input
                         type="file"
                         onChange={async (e) => {
+                          if (!e.target.files[0].type.startsWith("image/")) {
+                            toast.warn("Please upload only image files.");
+                            e.target.value = "";
+                            setRerender((prev) => !prev);
+                            return;
+                            // Clear the input if it's not an image
+                          }
                           const image = await compressImage(e.target.files[0]);
                           console.log(image, "compress image");
                           const reader = new FileReader();
@@ -497,7 +540,7 @@ const Page = ({ params }) => {
               </div>
             </div>
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
-              <label htmlFor="">Review Behind The Scene of Project*</label>
+              <label htmlFor="">Review Behind The Scene of Project</label>
               <QuillEditor value={editorContent} onChange={setEditorContent} />
             </div>
             <button
@@ -509,7 +552,7 @@ const Page = ({ params }) => {
             <div
               className={`${
                 loading ? "" : "hidden"
-              }  w-full h-[100dvh] absolute bottom-0 right-0 backdrop-blur-sm `}
+              }  w-full h-[100dvh] fixed z-50 bottom-0 right-0 backdrop-blur-sm `}
             >
               <div
                 className={` bg-white w-[500px] shadow-lg  top-1/2 -translate-x-1/2 z-20 -right-1/2 -translate-y-1/2 text-black h-[300px] relative   flex flex-col items-center justify-center gap-5  rounded-lg`}

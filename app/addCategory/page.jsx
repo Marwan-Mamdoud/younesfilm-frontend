@@ -15,7 +15,7 @@ const Page = () => {
     <>
       <div className="mx-auto w-[1250px] pt-36">
         <label htmlFor="input" className="block mb-2">
-          Add new work Type*
+          Add new work Type<span className="text-red-600 text-xl"> *</span>
         </label>
         <form onSubmit={onsubmit}>
           <input
@@ -36,7 +36,7 @@ const Page = () => {
         <div
           className={`${
             loading ? "" : "hidden"
-          }  w-full h-[100dvh] absolute top-0 right-0 backdrop-blur-sm `}
+          }  w-full h-[100dvh] fixed z-50 bottom-0 right-0 backdrop-blur-sm `}
         >
           <div
             className={` bg-white w-[500px]  top-1/2 -translate-x-1/2 z-20 -right-1/2 -translate-y-1/2 text-black h-[300px] relative   flex flex-col items-center justify-center gap-5  rounded-lg`}
