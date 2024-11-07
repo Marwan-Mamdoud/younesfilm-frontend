@@ -98,9 +98,6 @@ const Page = ({ params }) => {
     const res = await updateProject(project?._id, data);
     console.log(res);
     setLoading(false);
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
   };
 
   return (
