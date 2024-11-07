@@ -1,5 +1,5 @@
 "use client";
-import { addProject, getCategories } from "@/lib/api";
+import { addProject, getCategories, uploadImageToCloudinary } from "@/lib/api";
 import imageCompression from "browser-image-compression";
 import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
@@ -77,6 +77,9 @@ const Page = () => {
     console.log(data);
     const res = await addProject(data);
     setLoading(false);
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
   };
 
   return (
@@ -126,9 +129,10 @@ const Page = () => {
                   console.log(image, "compress image");
                   const reader = new FileReader();
                   reader.readAsDataURL(image);
-                  reader.onload = () => {
-                    setThumbnail(reader.result);
-                    console.log(reader.result, "image after reader");
+                  reader.onload = async () => {
+                    const result = await uploadImageToCloudinary(reader.result);
+                    setThumbnail(result);
+                    console.log(result, "image after reader");
 
                     // This will be a base64 string
                   };
@@ -353,13 +357,18 @@ const Page = () => {
                       const image = await compressImage(e.target.files[0]);
                       const reader = new FileReader();
                       reader.readAsDataURL(image);
-                      reader.onload = () => {
+                      reader.onload = async () => {
                         // setImages((prev) => [
+                        const result = await uploadImageToCloudinary(
+                          reader.result
+                        );
                         Images[0] = {};
-                        Images[0].before = reader.result;
+                        Images[0].before = result;
                         // ]);
                         setRerender((prev) => !prev);
-                        // This will be a base64 string
+                        console.log("image", result);
+
+                        // This will be a base64 string,
                       };
                       console.log(Images, "image after reader");
                     }}
@@ -391,12 +400,15 @@ const Page = () => {
                       console.log(image, "compress image");
                       const reader = new FileReader();
                       reader.readAsDataURL(image);
-                      reader.onload = () => {
+                      reader.onload = async () => {
                         // setImages((prev) => [
-                        Images[0].after = reader.result;
+                        const result = await uploadImageToCloudinary(
+                          reader.result
+                        );
+                        Images[0].after = result;
                         // ]);
                         setRerender((prev) => !prev);
-
+                        console.log("image", result);
                         // This will be a base64 string
                       };
                       console.log(Images, "image after reader");
@@ -436,12 +448,16 @@ const Page = () => {
                         console.log(image, "compress image");
                         const reader = new FileReader();
                         reader.readAsDataURL(image);
-                        reader.onload = () => {
+                        reader.onload = async () => {
                           console.log(Images, "before ittrable");
+                          const result = await uploadImageToCloudinary(
+                            reader.result
+                          );
                           Images[index + 1] = {};
-                          Images[index + 1].before = reader.result;
+                          Images[index + 1].before = result;
                           // ]);
                           setRerender((prev) => !prev);
+                          console.log("image", result);
 
                           // This will be a base64 string
                         };
@@ -480,10 +496,15 @@ const Page = () => {
                         console.log(image, "compress image");
                         const reader = new FileReader();
                         reader.readAsDataURL(image);
-                        reader.onload = () => {
-                          Images[index + 1].after = reader.result;
+                        reader.onload = async () => {
+                          const result = await uploadImageToCloudinary(
+                            reader.result
+                          );
+                          Images[index + 1].after = result;
                           // ]);
                           setRerender((prev) => !prev);
+                          console.log("image", result);
+
                           // This will be a base64 string
                         };
                         console.log(Images, index, "image after reader");
@@ -529,8 +550,13 @@ const Page = () => {
                     console.log(image, "compress image");
                     const reader = new FileReader();
                     reader.readAsDataURL(image);
-                    reader.onload = () => {
-                      ImagesBehindTheScene[0] = reader.result;
+                    reader.onload = async () => {
+                      const result = await uploadImageToCloudinary(
+                        reader.result
+                      );
+                      ImagesBehindTheScene[0] = result;
+                      console.log("image", result);
+
                       setRerender((prev) => !prev);
                       // This will be a base64 string
                     };
@@ -565,8 +591,13 @@ const Page = () => {
                           console.log(image, "compress image");
                           const reader = new FileReader();
                           reader.readAsDataURL(image);
-                          reader.onload = () => {
-                            ImagesBehindTheScene[index + 1] = reader.result;
+                          reader.onload = async () => {
+                            const result = await uploadImageToCloudinary(
+                              reader.result
+                            );
+                            ImagesBehindTheScene[index + 1] = result;
+                            console.log("image", result);
+
                             setRerender((prev) => !prev);
                             // This will be a base64 string
                           };
