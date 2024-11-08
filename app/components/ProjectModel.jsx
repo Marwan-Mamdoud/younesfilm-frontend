@@ -16,7 +16,7 @@ const ProjectModel = ({ id, thumbnail, name }) => {
   return (
     <>
       <div
-        onClick={(() => setOpenDialog(true), console.log("done dailog"))}
+        onClick={(() => setOpenDialog(false), console.log("done close dailog"))}
         className={`${
           openDialop ? "" : "hidden"
         } top-0 right-0 w-[100dvw] z-40 fixed flex items-center justify-center h-[100dvh] mx-10 backdrop-blur-md  text-black`}
@@ -70,7 +70,7 @@ const ProjectModel = ({ id, thumbnail, name }) => {
           <img
             src="https://cdn.prod.website-files.com/66eaae371a3339a1873d1c70/66f2cae281b321c33c489471_bin-white.png"
             alt="delete"
-            onClick={() => setOpenDialog(true)}
+            onClick={(() => setOpenDialog(true), console.log("done open "))}
             className="w-6  h-6 z-30"
           />
         </div>
