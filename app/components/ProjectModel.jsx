@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const ProjectModel = ({ id, thumbnail, name }) => {
-  const [openDialop, setOpenDialog] = useState(false);
+  const [openDialop, setOpenDialog] = useState(true);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
   const style = {
