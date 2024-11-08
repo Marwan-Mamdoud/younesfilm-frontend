@@ -1,39 +1,67 @@
 import { getProjects, sortedProjects } from "@/lib/api";
+import React from "react";
+import { useEffect, useState } from "react";
 import ProjectModel from "./ProjectModel";
-import dynamic from "next/dynamic";
-const Sortable = dynamic(() => import("react-sortablejs"), { ssr: false });
-
-import React, { useEffect, useState } from "react";
-import { ReactSortable } from "react-sortablejs";
-// import Sortable from "sortablejs";
+import { closestCorners, DndContext } from "@dnd-kit/core";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 
 const Projects = () => {
+  const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
-    getProjects().then((data) => setProjects(data));
-  }, []);
+  const handleDragEnd = (e) => {
+    const { active, over } = e;
 
+    if (over && active.id !== over.id) {
+      const oldIndex = projects.findIndex((item) => item.id === active.id);
+      const newIndex = projects.findIndex((item) => item.id === over.id);
+      setProjects((items) => arrayMove(items, oldIndex, newIndex));
+    }
+  };
   useEffect(() => {
     sortedProjects(projects);
   }, [projects]);
 
-  return (
-    <div className="flex flex-wrap gap-10 items-start justify-start">
-      <ReactSortable
-        className="flex flex-wrap  gap-10 items-start justify-start"
-        list={projects}
-        setList={setProjects}
+  useEffect(() => {
+    setLoading(true);
+    getProjects().then((res) => setProjects(res));
+    setLoading(false);
+  }, []);
+
+  return loading ? (
+    <div
+      className={`${
+        loading ? "" : "hidden"
+      }  w-full h-[100dvh] fixed z-50 bottom-0 right-0 backdrop-blur-sm `}
+    >
+      <div
+        className={` bg-white w-[500px] shadow-lg  top-1/2 -translate-x-1/2 z-20 -right-1/2 -translate-y-1/2 text-black h-[300px] relative   flex flex-col items-center justify-center gap-5  rounded-lg`}
       >
-        {projects?.map((project) => (
-          <ProjectModel
-            key={project._id}
-            name={project.name}
-            id={project._id}
-            thumbnail={`${project.thumbnail}`}
-          />
-        ))}
-      </ReactSortable>
+        <img
+          loading="lazy"
+          src="/laoding.png"
+          alt="laoding"
+          className="w-20 h-20 animate-spin  rounded-full"
+        />
+        <p className="font-bold text-4xl tracking-wide">Loading...</p>
+      </div>
+    </div>
+  ) : (
+    <div className="">
+      <DndContext onDragEnd={handleDragEnd} className="w-full h-full">
+        <SortableContext items={projects.map((item) => (item.id = item._id))}>
+          <div className="flex flex-wrap items-center text-black justify-start gap-10">
+            {projects.map((item) => (
+              <ProjectModel
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                thumbnail={item.thumbnail}
+              />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };

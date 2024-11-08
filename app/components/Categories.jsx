@@ -1,3 +1,4 @@
+"use client";
 import { delelteCategory, getCategories, updateCategory } from "@/lib/api";
 import React, { useEffect, useState } from "react";
 

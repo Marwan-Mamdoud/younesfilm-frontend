@@ -12,6 +12,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { DeleteIcon } from "lucide-react";
 import QuillEditor from "@/app/add/quill";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Page = ({ params }) => {
   const { idProject } = params;
@@ -40,6 +41,7 @@ const Page = ({ params }) => {
   const [editorContent, setEditorContent] = useState("");
   const [date, setDate] = useState();
   const [project, setProject] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     getCategories().then((res) => setCategories(res));
@@ -99,6 +101,9 @@ const Page = ({ params }) => {
     const res = await updateProject(project?._id, data);
     console.log(res);
     setLoading(false);
+    if (res) {
+      router.push("/");
+    }
   };
 
   return (

@@ -4,13 +4,8 @@ import imageCompression from "browser-image-compression";
 import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import QuillEditor from "./quill";
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from "@chakra-ui/react";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const compressImage = async (file) => {
@@ -41,6 +36,7 @@ const Page = () => {
     });
   }, []);
 
+  const router = useRouter();
   const hundleSubmit = async (e) => {
     e.preventDefault();
     const form = document.getElementById("form");
@@ -77,9 +73,9 @@ const Page = () => {
     console.log(data);
     const res = await addProject(data);
     setLoading(false);
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
+    if (res) {
+      router.push("/");
+    }
   };
 
   return (
