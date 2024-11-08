@@ -16,7 +16,7 @@ const ProjectModel = ({ id, thumbnail, name }) => {
   return (
     <>
       <div
-        onClick={() => setOpenDialog(false)}
+        onClick={() => setOpenDialog(true)}
         className={`${
           openDialop ? "" : "hidden"
         } top-0 right-0 w-[100dvw] z-30 fixed flex items-center justify-center h-[100dvh] mx-10 backdrop-blur-md  text-black`}
