@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const ProjectModel = ({ id, thumbnail, name }) => {
-  const [openDialop, setOpenDialog] = useState(true);
+  const [openDialop, setOpenDialog] = useState(false);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
   const style = {
@@ -16,10 +16,10 @@ const ProjectModel = ({ id, thumbnail, name }) => {
   return (
     <>
       <div
-        onClick={(() => setOpenDialog(true), console.log("done"))}
+        onClick={(() => setOpenDialog(true), console.log("done dailog"))}
         className={`${
           openDialop ? "" : "hidden"
-        } top-0 right-0 w-[100dvw] z-30 fixed flex items-center justify-center h-[100dvh] mx-10 backdrop-blur-md  text-black`}
+        } top-0 right-0 w-[100dvw] z-40 fixed flex items-center justify-center h-[100dvh] mx-10 backdrop-blur-md  text-black`}
       >
         <div className="w-[600px] z-50 h-fit flex items-center justify-center flex-col rounded-2xl p-5 py-20 bg-white">
           <p className="text-3xl cursor-default font-bold  text-center tracking-wide">
@@ -71,7 +71,7 @@ const ProjectModel = ({ id, thumbnail, name }) => {
             src="https://cdn.prod.website-files.com/66eaae371a3339a1873d1c70/66f2cae281b321c33c489471_bin-white.png"
             alt="delete"
             onClick={() => setOpenDialog(true)}
-            className="w-6  h-6 z-10"
+            className="w-6  h-6 z-30"
           />
         </div>
       </div>
