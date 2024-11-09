@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import ProjectModel from "./ProjectModel";
 import { closestCorners, DndContext } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-
+import ResponsivePagination from "react-responsive-pagination";
+import "react-responsive-pagination/themes/classic.css";
 const Projects = () => {
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setpages] = useState();
 
   const handleDragEnd = (e) => {
     const { active, over } = e;
@@ -24,9 +27,19 @@ const Projects = () => {
 
   useEffect(() => {
     setLoading(true);
-    getProjects().then((res) => setProjects(res));
+    getProjects(currentPage).then((res) => {
+      setProjects(res.projects);
+      setpages(res.pages);
+    });
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    getProjects(currentPage).then((res) => {
+      setProjects(res.projects);
+      setpages(res.pages);
+    });
+  }, [currentPage]);
 
   return loading ? (
     <div
@@ -47,7 +60,7 @@ const Projects = () => {
       </div>
     </div>
   ) : (
-    <div className="">
+    <div className="w-full">
       <DndContext onDragEnd={handleDragEnd} className="w-full h-full">
         <SortableContext items={projects.map((item) => (item.id = item._id))}>
           <div className="flex flex-wrap items-center text-black justify-start gap-10">
@@ -62,6 +75,11 @@ const Projects = () => {
           </div>
         </SortableContext>
       </DndContext>
+      <ResponsivePagination
+        current={currentPage}
+        total={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };

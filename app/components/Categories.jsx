@@ -7,7 +7,7 @@ const Categories = () => {
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [loading, setLoading] = useState(false);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState();
   useEffect(() => {
     getCategories().then((data) => {
       setCategories(data);
@@ -26,7 +26,7 @@ const Categories = () => {
   return (
     <div className="grid grid-cols-2 gap-8 mt-20 items-start justify-start">
       {categories?.length > 0
-        ? categories?.map((item) => (
+        ? categories?.map((item, index) => (
             <form onSubmit={editCategory} key={item.name}>
               <div className="flex justify-center items-center gap-12 mr-10">
                 <input
@@ -38,16 +38,16 @@ const Categories = () => {
                   }}
                   required
                   className={`w-[350px] h-[45px] bg-white px-5 text-black flex items-start rounded-md ${
-                    !edit ? "cursor-not-allowed" : ""
+                    edit == index ? "" : "cursor-not-allowed"
                   }`}
                 ></input>
                 <div className="flex items-center justify-center gap-5">
                   <img
                     src="https://cdn.prod.website-files.com/66eaae371a3339a1873d1c70/66f2caebf0f6165c1abbe4b2_pencil-white.png"
                     alt="edit"
-                    onClick={() => setEdit(true)}
+                    onClick={() => setEdit(index)}
                     className={`h-5 cursor-pointer w-5  ${
-                      edit === true ? "hidden" : " "
+                      edit === index ? "hidden" : " "
                     }`}
                   />
                   <button
@@ -57,7 +57,7 @@ const Categories = () => {
                     }}
                     type="submit"
                     className={`py-2 px-5 bg-white rounded-lg  text-black ${
-                      edit === true ? " " : "hidden"
+                      edit === index ? " " : "hidden"
                     }`}
                   >
                     Save

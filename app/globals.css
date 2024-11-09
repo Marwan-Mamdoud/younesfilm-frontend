@@ -39,6 +39,12 @@
   width: 100%;
   z-index: -1;
 }
+.overlayDrag {
+  background-image: linear-gradient(#0000, #000000e3);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
 
 .slick-prev {
   left: -8.5% !important;

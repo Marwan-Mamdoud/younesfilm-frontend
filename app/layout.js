@@ -56,6 +56,13 @@ export default function RootLayout({ children }) {
               {" "}
               <FaPlus /> New Categories
             </Link>
+            <Link
+              href="/addUser"
+              className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px]  hover:bg-white hover:text-black duration-500 ease-in"
+            >
+              {" "}
+              <FaPlus /> New User
+            </Link>
           </div>
         </div>
         {children}
