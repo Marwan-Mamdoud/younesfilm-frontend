@@ -44,7 +44,7 @@ const Users = () => {
               openDialop ? "" : "hidden"
             } top-0 right-0 w-[100dvw] z-50  fixed flex items-center justify-center h-[100dvh] mx-10 backdrop-blur-md  text-black`}
           >
-            <div className="w-[600px]  h-fit flex items-center justify-center flex-col rounded-2xl p-5 py-20 bg-white">
+            <div className="w-[600px]  h-fit flex items-center justify-center flex-col rounded-lg p-5 py-20 bg-white">
               <p className="text-3xl cursor-default font-bold  text-center tracking-wide">
                 -Are you sure you want to delete user<br></br>
                 <span className="mt-2 text-stone-600">-- {name} --</span> ?!
@@ -54,7 +54,7 @@ const Users = () => {
                   No, Close
                 </button>
                 <button
-                  onClick={() => deleteUser(id)}
+                  onClick={() => deleteUser(_id)}
                   className="px-10 py-4 bg-red-400 rounded-2xl"
                 >
                   Yes, Delete
