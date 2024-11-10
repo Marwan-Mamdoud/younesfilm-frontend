@@ -56,7 +56,6 @@ const Users = () => {
                 <button
                   onClick={() => {
                     deleteUser(_id);
-                    setUsers(prev.filter((item) => item._id === _id));
                   }}
                   className="px-10 py-4 bg-red-400 rounded-2xl"
                 >
