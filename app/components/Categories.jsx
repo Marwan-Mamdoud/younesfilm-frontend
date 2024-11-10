@@ -68,6 +68,7 @@ const Categories = () => {
                     onClick={async () => {
                       setLoading(true);
                       await delelteCategory({ id: item._id });
+                      categories.filter((i) => i._id === item_id);
                       setLoading(false);
                     }}
                     className="h-5 cursor-pointer w-5"
