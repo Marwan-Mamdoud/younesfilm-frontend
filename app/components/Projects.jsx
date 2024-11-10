@@ -19,11 +19,9 @@ const Projects = () => {
       const oldIndex = projects.findIndex((item) => item.id === active.id);
       const newIndex = projects.findIndex((item) => item.id === over.id);
       setProjects((items) => arrayMove(items, oldIndex, newIndex));
+      sortedProjects(projects);
     }
   };
-  useEffect(() => {
-    sortedProjects(projects);
-  }, [projects]);
 
   useEffect(() => {
     setLoading(true);
