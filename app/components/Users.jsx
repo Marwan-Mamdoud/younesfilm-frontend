@@ -54,10 +54,10 @@ const Users = () => {
                   No, Close
                 </button>
                 <button
-                  onClick={
-                    (() => deleteUser(_id),
-                    users.filter((item) => item._id === _id))
-                  }
+                  onClick={() => {
+                    deleteUser(_id);
+                    setUsers(prev.filter((item) => item._id === _id));
+                  }}
                   className="px-10 py-4 bg-red-400 rounded-2xl"
                 >
                   Yes, Delete
