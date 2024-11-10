@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import ProjectModel from "./ProjectModel";
 import { closestCorners, DndContext } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-import ResponsivePagination from "react-responsive-pagination";
-import "react-responsive-pagination/themes/classic.css";
+// import ResponsivePagination from "react-responsive-pagination";
+// import "react-responsive-pagination/themes/classic.css";
 const Projects = () => {
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -19,7 +19,6 @@ const Projects = () => {
       const oldIndex = projects.findIndex((item) => item.id === active.id);
       const newIndex = projects.findIndex((item) => item.id === over.id);
       setProjects((items) => arrayMove(items, oldIndex, newIndex));
-      sortedProjects(projects);
     }
   };
 
@@ -27,17 +26,21 @@ const Projects = () => {
     setLoading(true);
     getProjects(currentPage).then((res) => {
       setProjects(res.projects);
-      setpages(res.pages);
+      // setpages(res.pages);
     });
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    getProjects(currentPage).then((res) => {
-      setProjects(res.projects);
-      setpages(res.pages);
-    });
-  }, [currentPage]);
+    sortedProjects(projects);
+  }, [projects]);
+
+  // useEffect(() => {
+  //   getProjects(currentPage).then((res) => {
+  //     setProjects(res.projects);
+  //     setpages(res.pages);
+  //   });
+  // }, [currentPage]);
 
   return loading ? (
     <div
@@ -73,11 +76,11 @@ const Projects = () => {
           </div>
         </SortableContext>
       </DndContext>
-      <ResponsivePagination
+      {/* <ResponsivePagination
         current={currentPage}
         total={totalPages}
         onPageChange={setCurrentPage}
-      />
+      /> */}
     </div>
   );
 };

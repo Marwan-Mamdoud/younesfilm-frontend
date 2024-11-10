@@ -1,15 +1,18 @@
 "use client";
 import { addCategory } from "@/lib/api";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Page = () => {
   const [name, setName] = useState();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const onsubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     await addCategory(name);
     setLoading(false);
+    router.push("/");
   };
   return (
     <>

@@ -37,7 +37,7 @@ const ProjectsAndCategories = () => {
           } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px] hover:bg-white hover:text-black duration-500 ease-in`}
         >
           {" "}
-          Users
+          Clients
         </button>
         <button
           onClick={() => {
@@ -57,7 +57,7 @@ const ProjectsAndCategories = () => {
         <p className="text-5xl font-semibold">
           {showProject && "Projects"}
           {showCategories && "Categories"}
-          {showUsers && "Users"}
+          {showUsers && "Clients"}
         </p>
         <div className="flex flex-wrap w-full items-start justify-start">
           {showProject && <Projects />}
