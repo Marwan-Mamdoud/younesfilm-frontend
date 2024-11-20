@@ -184,6 +184,28 @@ const Page = () => {
                 ))}
               </select>
             </div>
+            <div className="flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="StyleProject">
+                Style of Project{" "}
+                <span className="text-red-600 text-xl"> *</span>
+              </label>
+              <select
+                name="style"
+                id="StyleProject"
+                required
+                defaultValue="Select category"
+                placeholder="Enter category of project"
+                className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+              >
+                <option value="">Select Style</option>
+                <option disabled value="tall">
+                  Tall
+                </option>
+                <option disabled value="wide">
+                  Wide
+                </option>
+              </select>
+            </div>
             <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
               <label htmlFor="">Videos of Project</label>
 
