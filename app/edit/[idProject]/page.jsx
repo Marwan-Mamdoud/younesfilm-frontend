@@ -219,12 +219,8 @@ const Page = ({ params }) => {
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
                 <option value="">Select Style</option>
-                <option disabled value="tall">
-                  Tall
-                </option>
-                <option disabled value="wide">
-                  Wide
-                </option>
+                <option value="tall">Tall</option>
+                <option value="wide">Wide</option>
               </select>
             </div>
             <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
