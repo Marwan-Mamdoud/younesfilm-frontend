@@ -242,7 +242,7 @@ const Page = ({ params }) => {
           </div>
         )}
         {project?.reviewBehindScenes ||
-        project?.imagesBehindScenes.length > 0 ? (
+        project?.imagesBehindScenes[0].en.length > 0 ? (
           <div className="w-8/12 mx-auto h-fit mb-20">
             <p className="text-[110px] text-center text-black font-semibold uppercase">
               Behind scenes
