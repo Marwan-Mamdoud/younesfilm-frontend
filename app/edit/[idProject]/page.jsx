@@ -293,8 +293,8 @@ const Page = ({ params }) => {
                   Select category
                 </option>
                 {categories?.map((item, index) => (
-                  <option key={index} value={item.name}>
-                    {item.name}
+                  <option key={index} value={item.name[0]}>
+                    {item.name[0]}
                   </option>
                 ))}
               </select>
