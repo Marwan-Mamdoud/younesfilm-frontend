@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Page = () => {
-  const [name, setName] = useState();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onsubmit = async (e) => {
+    let name = document.querySelectorAll(".cat");
+    name = Array.from(name).map((item) => item.value);
     e.preventDefault();
     setLoading(true);
     await addCategory(name);
@@ -25,9 +26,22 @@ const Page = () => {
             type="text"
             name="input"
             required
-            onChange={(e) => setName(e.target.value)}
-            className=" outline-none rounded-md px-5 h-12 text-black/60 w-10/12"
-            placeholder="Enter new work type"
+            className=" outline-none cat  rounded-md px-5 h-12 text-black/60 w-10/12"
+            placeholder="Enter new work type EN"
+          />
+          <input
+            type="text"
+            name="input"
+            required
+            className=" outline-none cat my-5 rounded-md px-5 h-12 text-black/60 w-10/12"
+            placeholder="Enter new work type CZ"
+          />
+          <input
+            type="text"
+            name="input"
+            required
+            className=" outline-none cat rounded-md px-5 h-12 text-black/60 w-10/12"
+            placeholder="Enter new work type AR"
           />
           <button
             type="submit"
