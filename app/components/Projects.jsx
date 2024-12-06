@@ -7,6 +7,7 @@ import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 // import ResponsivePagination from "react-responsive-pagination";
 // import "react-responsive-pagination/themes/classic.css";
 const Projects = () => {
+  const lang = "en";
   const [loading, setLoading] = useState(false);
   const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -24,9 +25,11 @@ const Projects = () => {
 
   useEffect(() => {
     setLoading(true);
+
     getProjects(currentPage).then((res) => {
       setProjects(res.projects);
       // setpages(res.pages);
+      console.log(res.projects[17].crews[1].cz.length);
     });
     setLoading(false);
   }, []);
@@ -69,7 +72,7 @@ const Projects = () => {
               <ProjectModel
                 key={item._id}
                 id={item._id}
-                name={item.name}
+                name={item.name[0] ? item.name[0].en : item.name}
                 thumbnail={item.thumbnail}
               />
             ))}

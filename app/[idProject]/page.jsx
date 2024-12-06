@@ -15,6 +15,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 const Page = ({ params }) => {
+  let lang = localStorage.getItem("language") || "en";
+  const index =
+    lang == "ar" ? 2 : lang == "cz" ? 1 : lang == "en" ? 0 : !lang ? 0 : 0;
   const { idProject } = params;
   const [project, setProject] = useState();
   const [Video, setVideo] = useState();
@@ -48,7 +51,7 @@ const Page = ({ params }) => {
           alt="image"
         />
         <p className="text-white uppercase text-6xl text-center tracking-wider cursor-default font-bold absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
-          {project?.name}
+          {project?.name[index][lang]}
         </p>
       </div>
       <div className="w-[98%] h-full  bg-white rounded-md mx-auto">
@@ -138,11 +141,11 @@ const Page = ({ params }) => {
             </div>
           </div>
         )}
-        {project?.crews.length > 0 && (
+        {project?.crews[index][lang].length > 0 && (
           <div className="mt-20 relative ">
             <div className="flex items-center w-fit  justify-center mx-auto  text-black font-semibold font-sans text-2xl">
               <div className="flex flex-col items-end  w-[500px] justify-end">
-                {project.crews.map((item, index) => {
+                {project.crews[index][lang].map((item, index) => {
                   return (
                     <p className="first-letter:uppercase " key={index}>
                       {item.name}
@@ -152,7 +155,7 @@ const Page = ({ params }) => {
               </div>
 
               <div className="flex flex-col  items-center justify-start">
-                {project.crews.map((item, index) => {
+                {project.crews[index][lang].map((item, index) => {
                   return (
                     <div
                       className="first-letter:uppercase h-full mx-5 w-1 border-r-[1px] border-black"
@@ -164,7 +167,7 @@ const Page = ({ params }) => {
                 })}
               </div>
               <div className="flex flex-col  items-start w-[500px] justify-start">
-                {project.crews.map((item, index) => {
+                {project.crews[index][lang].map((item, index) => {
                   return (
                     <p className="first-letter:uppercase" key={index}>
                       {item.job}
@@ -175,9 +178,9 @@ const Page = ({ params }) => {
             </div>
           </div>
         )}
-        {project?.review && (
+        {project?.review[index][lang] && (
           <div className="flex items-center justify-center w-full mx-auto p-7 mt-12 font-bold text-xl text-black text-center max-w-[990px]">
-            {project.review}
+            {project.review[index][lang]}
           </div>
         )}
         {project?.images.length > 0 && (
@@ -257,7 +260,7 @@ const Page = ({ params }) => {
               </div>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: project?.reviewBehindScenes,
+                  __html: project?.reviewBehindScenes[index][lang],
                 }}
                 className="text-white text-start items-center w-2/5 pl-2 pr-5"
               />

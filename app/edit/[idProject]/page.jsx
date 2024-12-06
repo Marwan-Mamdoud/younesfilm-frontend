@@ -38,7 +38,9 @@ const Page = ({ params }) => {
   const [_, setRerender] = useState(false);
   const [ImagesBehindTheScene, setImagesBehindTheScene] = useState([]);
   const [ImagesBehindTheScene1, setImagesBehindTheScene1] = useState([]);
-  const [editorContent, setEditorContent] = useState("");
+  const [editorContentEn, setEditorContentEn] = useState("");
+  const [editorContentCz, setEditorContentCz] = useState("");
+  const [editorContentAr, setEditorContentAr] = useState("");
   const [date, setDate] = useState();
   const [project, setProject] = useState();
   const router = useRouter();
@@ -56,7 +58,9 @@ const Page = ({ params }) => {
         ),
         setImages12(res.images);
       setImagesBehindTheScene1(res.imagesBehindScenes);
-      setEditorContent(res.reviewBehindScenes);
+      setEditorContentEn(res.reviewBehindScenes[0]?.en);
+      setEditorContentAr(res.reviewBehindScenes[2]?.ar);
+      setEditorContentCz(res.reviewBehindScenes[1]?.cz);
     });
 
     console.log(project, "project from use Effect");
@@ -67,25 +71,58 @@ const Page = ({ params }) => {
 
     const form = document.getElementById("form");
     const Form = new FormData(form);
-    let crews = document.querySelectorAll(".crews");
     let videos = document.querySelectorAll(".videos");
 
-    crews = Array.from(crews).map((item) =>
+    let crewsen = document.querySelectorAll(".crewsen");
+    let crewscz = document.querySelectorAll(".crewscz");
+    let crewsar = document.querySelectorAll(".crewsar");
+    // ========================================================================
+    crewsen = Array.from(crewsen).map((item) =>
       item.value == "" ? null : item.value
     );
-    crews = crews.filter((item) => item !== null);
-    crews = crews.map((cr) => {
-      return { name: cr.split(",")[0].trim(), job: cr.split(",")[1]?.trim() };
+    crewsen = crewsen.filter((item) => item !== null);
+    crewsen = crewsen.map((cr) => {
+      return { name: cr.split(",")[0]?.trim(), job: cr.split(",")[1]?.trim() };
     });
-    crews = crews.filter((item) => item.job !== "");
+    crewsen = crewsen.filter((item) => item.job !== undefined);
+    crewsen = crewsen.filter((item) => item.job !== null);
+    crewsen = crewsen.filter((item) => item.job !== "");
+    crewsen = crewsen.filter((item) => item.name !== "" || null || undefined);
+    // console.log(crews);
+    // ==================================================================================
+    // ========================================================================
+    crewscz = Array.from(crewscz).map((item) =>
+      item.value == "" ? null : item.value
+    );
+    crewscz = crewscz.filter((item) => item !== null);
+    crewscz = crewscz.map((cr) => {
+      return { name: cr.split(",")[1]?.trim(), job: cr.split(",")[0]?.trim() };
+    });
+    crewscz = crewscz.filter((item) => item.job !== undefined);
+    crewscz = crewscz.filter((item) => item.job !== null);
+    crewscz = crewscz.filter((item) => item.job !== "");
+    crewscz = crewscz.filter((item) => item.name !== "" || null || undefined);
+    // console.log(crews);
+    // ==================================================================================
+    // ========================================================================
+    crewsar = Array.from(crewsar).map((item) =>
+      item.value == "" ? null : item.value
+    );
+    crewsar = crewsar.filter((item) => item !== null);
+    crewsar = crewsar.map((cr) => {
+      return { name: cr.split(",")[1]?.trim(), job: cr.split(",")[0]?.trim() };
+    });
+    crewsar = crewsar.filter((item) => item.job !== undefined);
+    crewsar = crewsar.filter((item) => item.job !== null);
+    crewsar = crewsar.filter((item) => item.job !== "");
+    crewsar = crewsar.filter((item) => item.name !== "" || null || undefined);
+    // console.log(crews);
+    let crews = [{ en: crewsen }, { cz: crewscz }, { ar: crewsar }];
+    // ==================================================================================
+
     videos = Array.from(videos).map((item) =>
       item.value == "" ? null : item.value
     );
-    crews = crews.filter((item) => item.job !== undefined);
-    crews = crews.filter((item) => item.job !== null);
-    crews = crews.filter((item) => item.job !== "");
-    crews = crews.filter((item) => item.name !== "" || null || undefined);
-
     videos = videos.filter((item) => item !== null);
     const data = Object.fromEntries(Form.entries());
     data.thumbnailImage = thumbnailImage;
@@ -93,9 +130,35 @@ const Page = ({ params }) => {
     data.videos = JSON.stringify(videos);
     data.date = date;
 
+    let names = document.querySelectorAll(".name");
+    // ====================================================================
+    names = Array.from(names).map((item) => item.value);
+    names[0] = { en: names[0] };
+    names[1] = { cz: names[1] };
+    names[2] = { ar: names[2] };
+    // ======================================================================
+
+    // ======================================================================
+    let Review = document.querySelectorAll(".review");
+    Review = Array.from(Review).map((item) => item.value);
+    Review[0] = { en: Review[0] };
+    Review[1] = { cz: Review[1] };
+    Review[2] = { ar: Review[2] };
+    // ========================================================================
+    // ======================================================================
+    const ReviewBehindTheScene = [
+      { en: editorContentEn },
+      { cz: editorContentCz },
+      { ar: editorContentAr },
+    ];
+    // ========================================================================
+
     data.Images = JSON.stringify(Images);
     data.ImagesBehindScenes = ImagesBehindTheScene;
-    data.reviewBehindScenes = editorContent;
+    data.reviewBehindScenes = JSON.stringify(ReviewBehindTheScene);
+    data.review = JSON.stringify(Review);
+    data.crews = JSON.stringify(crews);
+    data.name = JSON.stringify(names);
     setLoading(true);
     console.log(data, date);
     const res = await updateProject(project?._id, data);
@@ -118,15 +181,45 @@ const Page = ({ params }) => {
           >
             <div className="flex flex-col items-start justify-start gap-2">
               <label htmlFor="nameProject">
-                Name of Project<span className="text-red-600 text-xl"> *</span>
+                Name of Project en{" "}
+                <span className="text-red-600 text-xl"> *</span>
               </label>
               <input
                 type="text"
                 name="name"
-                defaultValue={project?.name}
+                required
+                defaultValue={project?.name[0].en}
                 id="nameProject"
                 placeholder="Enter name of project"
-                className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+                className="w-full name rounded-md bg-white text-black px-5 h-10 outline-none"
+              />
+            </div>
+            <div className="flex flex-col items-start justify-start gap-2">
+              <label htmlFor="nameProject">
+                Name of Project cz{" "}
+                <span className="text-red-600 text-xl"> *</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="nameProject"
+                defaultValue={project?.name[1].cz}
+                placeholder="Enter name of project"
+                className="w-full name rounded-md bg-white text-black px-5 h-10 outline-none"
+              />
+            </div>
+            <div className="flex flex-col items-start justify-start gap-2">
+              <label htmlFor="nameProject">
+                Name of Project ar{" "}
+                <span className="text-red-600 text-xl"> *</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={project?.name[2].ar}
+                id="nameProject"
+                placeholder="Enter name of project"
+                className="w-full name rounded-md bg-white text-black px-5 h-10 outline-none"
               />
             </div>
             <div className="flex items-center mx-auto mt-10  justify-center">
@@ -263,9 +356,10 @@ const Page = ({ params }) => {
                   setNumCrewsInput((prev) => [...prev, 1]);
                 }}
               />
-              <label htmlFor="crewsPorject">Crews of Project</label>
+
+              <label htmlFor="crewsPorject">Crews of Project en</label>
               <div className="grid grid-cols-2 gap-3 w-full">
-                {project?.crews.map((item, index) => {
+                {project?.crews[0].en.map((item, index) => {
                   return (
                     <input
                       type="text"
@@ -273,7 +367,7 @@ const Page = ({ params }) => {
                       defaultValue={`${item.name},${item.job}`}
                       id="crewsPorject"
                       placeholder="Enter crew of project"
-                      className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
+                      className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   );
                 })}
@@ -283,20 +377,90 @@ const Page = ({ params }) => {
                     type="text"
                     id="crewsPorject"
                     placeholder="Name , Job"
-                    className="w-full crews rounded-md bg-white text-black px-5 h-10 outline-none"
+                    className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                  />
+                ))}
+              </div>
+              <label htmlFor="crewsPorject">Crews of Project cz</label>
+              <div className="grid grid-cols-2 gap-3 w-full">
+                {project?.crews[1].cz.map((item, index) => {
+                  return (
+                    <input
+                      type="text"
+                      key={index}
+                      defaultValue={`${item.name},${item.job}`}
+                      id="crewsPorject"
+                      placeholder="Enter crew of project"
+                      className="w-full crewscz rounded-md bg-white text-black px-5 h-10 outline-none"
+                    />
+                  );
+                })}
+                {numCrewsInput.map((_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    id="crewsPorject"
+                    placeholder="Name , Job"
+                    className="w-full crewscz rounded-md bg-white text-black px-5 h-10 outline-none"
+                  />
+                ))}
+              </div>
+              <label htmlFor="crewsPorject">Crews of Project ar</label>
+              <div className="grid grid-cols-2 gap-3 w-full">
+                {project?.crews[2].ar.map((item, index) => {
+                  return (
+                    <input
+                      type="text"
+                      key={index}
+                      defaultValue={`${item.name},${item.job}`}
+                      id="crewsPorject"
+                      placeholder="Enter crew of project"
+                      className="w-full crewsar rounded-md bg-white text-black px-5 h-10 outline-none"
+                    />
+                  );
+                })}
+                {numCrewsInput.map((_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    id="crewsPorject"
+                    placeholder="Name , Job"
+                    className="w-full crewsar rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                 ))}
               </div>
             </div>
             <div className="flex flex-col mt-5 items-start justify-start gap-2">
-              <label htmlFor="reviewPorject">Review of Project</label>
+              <label htmlFor="reviewPorject">Review of Project en</label>
               <textarea
                 type="reviewPorject"
                 name="review"
-                defaultValue={project?.review}
+                id="reviewPorject"
+                defaultValue={project?.review[0]?.en}
+                placeholder="Enter Review of project"
+                className="w-full review rounded-md bg-white h-28 text-black px-5 py-3 outline-none"
+              />
+            </div>
+            <div className="flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="reviewPorject">Review of Project cz</label>
+              <textarea
+                type="reviewPorject"
+                name="review"
+                id="reviewPorject"
+                defaultValue={project?.review[1]?.cz}
+                placeholder="Enter Review of project"
+                className="w-full review rounded-md bg-white h-28 text-black px-5 py-3 outline-none"
+              />
+            </div>
+            <div className="flex flex-col mt-5 items-start justify-start gap-2">
+              <label htmlFor="reviewPorject">Review of Project ar</label>
+              <textarea
+                type="reviewPorject"
+                name="review"
+                defaultValue={project?.review[2]?.ar}
                 id="reviewPorject"
                 placeholder="Enter Review of project"
-                className="w-full rounded-md bg-white h-28 text-black px-5 py-3 outline-none"
+                className="w-full review rounded-md bg-white h-28 text-black px-5 py-3 outline-none"
               />
             </div>
             <div className="grid grid-cols-1 my-10 w-full  gap-5">
@@ -562,8 +726,25 @@ const Page = ({ params }) => {
               </div>
             </div>
             <div className="flex flex-col items-start justify-start mt-10 gap-2">
-              <label htmlFor="">Review Behind The Scene of Project</label>
-              <QuillEditor value={editorContent} onChange={setEditorContent} />
+              <label htmlFor="">Review Behind The Scene of Project en</label>
+              <QuillEditor
+                value={editorContentEn}
+                onChange={setEditorContentEn}
+              />
+            </div>
+            <div className="flex flex-col items-start justify-start mt-10 gap-2">
+              <label htmlFor="">Review Behind The Scene of Project cz</label>
+              <QuillEditor
+                value={editorContentCz}
+                onChange={setEditorContentCz}
+              />
+            </div>
+            <div className="flex flex-col items-start justify-start mt-10 gap-2">
+              <label htmlFor="">Review Behind The Scene of Project ar</label>
+              <QuillEditor
+                value={editorContentAr}
+                onChange={setEditorContentAr}
+              />
             </div>
             <button
               type="submit"
