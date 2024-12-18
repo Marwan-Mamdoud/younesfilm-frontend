@@ -295,7 +295,7 @@ const Page = ({ params }) => {
                 {categories?.map((item, index) => (
                   <option
                     key={index}
-                    selected={item.name[0] == project?.category}
+                    // selected={item.name[0] == project?.category}
                     value={item.name[0]}
                   >
                     {item.name[0]}
