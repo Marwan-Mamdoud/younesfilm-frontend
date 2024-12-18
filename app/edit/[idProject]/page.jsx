@@ -293,7 +293,11 @@ const Page = ({ params }) => {
                   Select category
                 </option>
                 {categories?.map((item, index) => (
-                  <option key={index} value={item.name[0]}>
+                  <option
+                    key={index}
+                    selected={item.name[0] == project?.category}
+                    value={item.name[0]}
+                  >
                     {item.name[0]}
                   </option>
                 ))}

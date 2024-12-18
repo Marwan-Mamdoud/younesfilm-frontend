@@ -325,6 +325,24 @@ const Page = () => {
               <div className="grid grid-cols-2 gap-3 w-full">
                 <input
                   type="text"
+                  defaultValue="Client,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
+                  defaultValue="Post Production,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
+                  defaultValue=" Production House,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
                   defaultValue="Agency,"
                   placeholder="Enter crew of project"
                   className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
@@ -426,6 +444,24 @@ const Page = () => {
               <div className="grid grid-cols-2 gap-3 w-full">
                 <input
                   type="text"
+                  defaultValue="Klient,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
+                  defaultValue="Postprodukce,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
+                  defaultValue=" Produkční dům,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
                   defaultValue="Agentura,"
                   placeholder="Enter crew of project"
                   className="w-full crewscz rounded-md bg-white text-black px-5 h-10 outline-none"
@@ -525,6 +561,24 @@ const Page = () => {
               </div>
               <label htmlFor="">Crews of Project ar</label>
               <div className="grid grid-cols-2 gap-3 w-full">
+                <input
+                  type="text"
+                  defaultValue="عميل,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
+                  defaultValue="مرحلة ما بعد الإنتاج,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
+                <input
+                  type="text"
+                  defaultValue=" دار الإنتاج,"
+                  placeholder="Enter crew of project"
+                  className="w-full crewsen rounded-md bg-white text-black px-5 h-10 outline-none"
+                />
                 <input
                   type="text"
                   defaultValue="الوكالة,"
