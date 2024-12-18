@@ -114,16 +114,16 @@ const Page = () => {
     crewsen = Array.from(crewsTTest).map((item) => {
       const obj = {};
       if (item.querySelector(".job").value.trim() == "") return;
-      obj.name = item.querySelector(".job").value;
-      obj.job = item.querySelector(".name").value;
+      obj.name = item.querySelector(".name").value;
+      obj.job = item.querySelector(".job").value;
       return obj;
     });
     const crewsTTestcz = document.querySelectorAll(".crewcz");
     crewscz = Array.from(crewsTTestcz).map((item) => {
       const obj = {};
       if (item.querySelector(".job").value == "") return;
-      obj.name = item.querySelector(".job").value;
-      obj.job = item.querySelector(".name").value;
+      obj.name = item.querySelector(".name").value;
+      obj.job = item.querySelector(".job").value;
       return obj;
     });
     const crewsTTestar = document.querySelectorAll(".crewar");
