@@ -46,23 +46,25 @@ const Page = ({ params }) => {
   const router = useRouter();
 
   useEffect(() => {
-    getCategories().then((res) => setCategories(res));
-    getProject(idProject).then((res) => {
-      setProject(res),
-        setDate(
-          new Date(res?.date).toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })
-        ),
-        setImages12(res.images);
-      setImagesBehindTheScene1(res.imagesBehindScenes);
-      setEditorContentEn(res.reviewBehindScenes[0]?.en);
-      setEditorContentAr(res.reviewBehindScenes[2]?.ar);
-      setEditorContentCz(res.reviewBehindScenes[1]?.cz);
-    });
-
+    const gets = async () => {
+      await getCategories().then((res) => setCategories(res));
+      await getProject(idProject).then((res) => {
+        setProject(res),
+          setDate(
+            new Date(res?.date).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })
+          ),
+          setImages12(res.images);
+        setImagesBehindTheScene1(res.imagesBehindScenes);
+        setEditorContentEn(res.reviewBehindScenes[0]?.en);
+        setEditorContentAr(res.reviewBehindScenes[2]?.ar);
+        setEditorContentCz(res.reviewBehindScenes[1]?.cz);
+      });
+    };
+    gets();
     console.log(project, "project from use Effect");
   }, []);
   const hundleSubmit = async (e) => {
