@@ -351,261 +351,30 @@ const Page = ({ params }) => {
                   setNumCrewsInput((prev) => [...prev, 1]);
                 }}
               />
-              <label htmlFor="">Crews of Project en</label>
-              <div className="grid grid-cols-2 gap-3 w-full">
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Client"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Post Production"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Production House"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Agency"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Executive Producer"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Director"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="DOP"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Focus Puller"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Editor"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Colorist"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Ad"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Line Producer"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Gaffer"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Hair dresser"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Makeup Artist"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Dress by"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Casting Director"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crew items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Dancer"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Name of Crew"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
 
+              <label htmlFor="crewsPorject">Crews of Project en</label>
+              <div className="grid grid-cols-2 gap-3 w-full">
+                {project?.crews[0].en.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="grid grid-cols-2 crew items-center justify-center gap-5"
+                    >
+                      <input
+                        type="text"
+                        defaultValue={item.job}
+                        placeholder="Enter crew of project"
+                        className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                      <input
+                        type="text"
+                        defaultValue={item.name}
+                        placeholder="Name of Crew"
+                        className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                    </div>
+                  );
+                })}
                 {numCrewsInput.map((_, index) => (
                   <div
                     key={index}
@@ -614,7 +383,7 @@ const Page = ({ params }) => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Name of Crew"
+                      placeholder="job of Crew"
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
@@ -626,261 +395,29 @@ const Page = ({ params }) => {
                   </div>
                 ))}
               </div>
-              <label htmlFor="">Crews of Project cz</label>
+              <label htmlFor="crewsPorject">Crews of Project cz</label>
               <div className="grid grid-cols-2 gap-3 w-full">
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Klient"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Postprodukce"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Produkční dům"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Agentura"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Výkonný producent"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Ředitel"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="DOP"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Focus Puller"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Editor"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Kolorista"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Ad"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Výrobce linky"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Gaffer"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Kadeřník"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Vizážistka"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Šaty od"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Castingový ředitel"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewcz items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Tanečnice"
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-
+                {project?.crews[1].cz.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="grid grid-cols-2 crewcz items-center justify-center gap-5"
+                    >
+                      <input
+                        type="text"
+                        defaultValue={item.job}
+                        placeholder="job of crew"
+                        className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                      <input
+                        type="text"
+                        defaultValue={item.name}
+                        placeholder="Name of Crew"
+                        className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                    </div>
+                  );
+                })}
                 {numCrewsInput.map((_, index) => (
                   <div
                     key={index}
@@ -889,273 +426,41 @@ const Page = ({ params }) => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Enter Jméno crew "
+                      placeholder="job of Crew"
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Enter job crew"
+                      placeholder="Name of Crew"
                       className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   </div>
                 ))}
               </div>
-              <label htmlFor="">Crews of Project ar</label>
+              <label htmlFor="crewsPorject">Crews of Project ar</label>
               <div className="grid grid-cols-2 gap-3 w-full">
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="عميل"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="مرحله ما بعد الانتاج"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="دار الانتاج"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="المؤسسه"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="المنتج التنفيذي"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="المدير"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="DOP"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="مجتذب التركيز"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="المحرر"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="الملون"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="AD"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="منتج خط الانتاج"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="Gaffer"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="مصفف الشعر"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="خبير التجميل"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="الفستان من تصميم"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="مدير أختيار الممثلين"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-                <div className="grid grid-cols-2 crewar items-center justify-center gap-5">
-                  <input
-                    type="text"
-                    defaultValue="الراقص"
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                  <input
-                    type="text"
-                    defaultValue=""
-                    placeholder="Enter crew of project"
-                    className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
-                  />
-                </div>
-
+                {project?.crews[2].ar.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="grid grid-cols-2 crewar items-center justify-center gap-5"
+                    >
+                      <input
+                        type="text"
+                        defaultValue={item.job}
+                        placeholder="name of crew"
+                        className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                      <input
+                        type="text"
+                        defaultValue={item.job}
+                        placeholder="Name of Crew"
+                        className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
+                      />
+                    </div>
+                  );
+                })}
                 {numCrewsInput.map((_, index) => (
                   <div
                     key={index}
@@ -1164,14 +469,14 @@ const Page = ({ params }) => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder=" ادخل وظيفه العامل"
-                      className=" w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
+                      placeholder="job of Crew"
+                      className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="ادخل اسم العامل"
-                      className=" w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
+                      placeholder="Name of Crew"
+                      className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   </div>
                 ))}
