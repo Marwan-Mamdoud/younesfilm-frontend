@@ -366,7 +366,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Client"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -380,7 +380,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Post Production"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -394,7 +394,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Production House"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -408,7 +408,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Agency"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -422,7 +422,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Executive Producer"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -436,7 +436,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Director"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -450,7 +450,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="DOP"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -464,7 +464,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Focus Puller"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -478,7 +478,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Editor"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -492,7 +492,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Colorist"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -506,7 +506,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Ad"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -520,7 +520,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Line Producer"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -534,7 +534,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Gaffer"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -548,7 +548,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Hair dresser"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -562,7 +562,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Makeup Artist"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -576,7 +576,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Dress by"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -590,7 +590,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Casting Director"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -604,7 +604,7 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Dancer"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
@@ -623,7 +623,7 @@ const Page = () => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Name of Crew"
+                      placeholder="job of Crew"
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
@@ -641,13 +641,13 @@ const Page = () => {
                   <input
                     type="text"
                     defaultValue="Klient"
-                    placeholder="Enter crew of project"
+                    placeholder="job of crew"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                   <input
                     type="text"
                     defaultValue=""
-                    placeholder="Enter crew of project"
+                    placeholder="name of crew"
                     className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
                 </div>

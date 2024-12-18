@@ -363,7 +363,7 @@ const Page = ({ params }) => {
                       <input
                         type="text"
                         defaultValue={item.job}
-                        placeholder="Enter crew of project"
+                        placeholder="job of crew "
                         className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
                       <input
@@ -426,13 +426,13 @@ const Page = ({ params }) => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="job of Crew"
+                      placeholder="jوظيفه العامل"
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Name of Crew"
+                      placeholder="اسم العامل"
                       className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   </div>
@@ -449,13 +449,13 @@ const Page = ({ params }) => {
                       <input
                         type="text"
                         defaultValue={item.job}
-                        placeholder="name of crew"
+                        placeholder="وظيفه العامل"
                         className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
                       <input
                         type="text"
                         defaultValue={item.name}
-                        placeholder="Name of Crew"
+                        placeholder="اسم العامل"
                         className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
                     </div>
