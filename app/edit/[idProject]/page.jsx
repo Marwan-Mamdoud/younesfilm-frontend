@@ -287,7 +287,7 @@ const Page = ({ params }) => {
                 name="category"
                 id="categoryProject"
                 required
-                defaultValue={project?.category}
+                value={project?.category}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
