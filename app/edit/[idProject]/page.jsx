@@ -454,7 +454,7 @@ const Page = ({ params }) => {
                       />
                       <input
                         type="text"
-                        defaultValue={item.job}
+                        defaultValue={item.name}
                         placeholder="Name of Crew"
                         className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
