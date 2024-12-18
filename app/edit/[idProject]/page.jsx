@@ -370,7 +370,7 @@ const Page = ({ params }) => {
                 <div className="grid grid-cols-2 crew items-center justify-center gap-5">
                   <input
                     type="text"
-                    defaultValue="Client"
+                    defaultValue="Post Production"
                     placeholder="Enter crew of project"
                     className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                   />
