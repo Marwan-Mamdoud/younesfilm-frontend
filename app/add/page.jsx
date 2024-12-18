@@ -190,7 +190,7 @@ const Page = () => {
               <input
                 type="text"
                 name="name"
-                // required
+                required
                 id="nameProject"
                 placeholder="Enter name of project"
                 className="w-full name rounded-md bg-white text-black px-5 h-10 outline-none"
@@ -243,7 +243,7 @@ const Page = () => {
               </label>
               <input
                 type="file"
-                // required
+                required
                 name="thumbnailImage"
                 id="thumbnail"
                 onChange={async (e) => {
@@ -276,7 +276,7 @@ const Page = () => {
               <input
                 type="date"
                 name="date"
-                // required
+                required
                 id="dateProject"
                 placeholder="Enter name of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
@@ -290,7 +290,7 @@ const Page = () => {
               <select
                 name="category"
                 id="categoryProject"
-                // required
+                required
                 defaultValue="Select category"
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
@@ -313,7 +313,7 @@ const Page = () => {
               <select
                 name="style"
                 id="StyleProject"
-                // required
+                required
                 defaultValue="Select category"
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
