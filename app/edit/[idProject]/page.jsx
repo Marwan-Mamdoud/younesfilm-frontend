@@ -313,7 +313,7 @@ const Page = ({ params }) => {
               <select
                 name="style"
                 id="StyleProject"
-                defaultValue={project?.style}
+                value={project?.style}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
