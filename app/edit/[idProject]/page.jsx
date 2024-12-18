@@ -83,16 +83,16 @@ const Page = ({ params }) => {
     crewsen = Array.from(crewsTTest).map((item) => {
       const obj = {};
       if (item.querySelector(".job").value.trim() == "") return;
-      obj.name = item.querySelector(".job").value;
-      obj.job = item.querySelector(".name").value;
+      obj.name = item.querySelector(".name").value;
+      obj.job = item.querySelector(".job").value;
       return obj;
     });
     const crewsTTestcz = document.querySelectorAll(".crewcz");
     crewscz = Array.from(crewsTTestcz).map((item) => {
       const obj = {};
       if (item.querySelector(".job").value == "") return;
-      obj.name = item.querySelector(".job").value;
-      obj.job = item.querySelector(".name").value;
+      obj.name = item.querySelector(".name").value;
+      obj.job = item.querySelector(".job").value;
       return obj;
     });
     const crewsTTestar = document.querySelectorAll(".crewar");
@@ -362,13 +362,13 @@ const Page = ({ params }) => {
                     >
                       <input
                         type="text"
-                        defaultValue={item.job}
+                        defaultValue={item.name}
                         placeholder="job of crew "
                         className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
                       <input
                         type="text"
-                        defaultValue={item.name}
+                        defaultValue={item.job}
                         placeholder="Name of Crew"
                         className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
@@ -405,13 +405,13 @@ const Page = ({ params }) => {
                     >
                       <input
                         type="text"
-                        defaultValue={item.job}
+                        defaultValue={item.name}
                         placeholder="job of crew"
                         className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
                       <input
                         type="text"
-                        defaultValue={item.name}
+                        defaultValue={item.job}
                         placeholder="Name of Crew"
                         className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                       />
