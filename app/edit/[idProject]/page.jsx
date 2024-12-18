@@ -426,13 +426,13 @@ const Page = ({ params }) => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="jوظيفه العامل"
+                      placeholder="job crew"
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="اسم العامل"
+                      placeholder="name job"
                       className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   </div>
@@ -469,13 +469,13 @@ const Page = ({ params }) => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="job of Crew"
+                      placeholder="وظيفه العامل"
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Name of Crew"
+                      placeholder="اسم العامل"
                       className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   </div>

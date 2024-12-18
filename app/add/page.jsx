@@ -898,13 +898,13 @@ const Page = () => {
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Enter Jméno crew "
+                      placeholder="Enter job crew "
                       className="w-full crewsen name rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                     <input
                       type="text"
                       defaultValue=""
-                      placeholder="Enter job crew"
+                      placeholder="Enter name crew"
                       className="w-full crewsen job rounded-md bg-white text-black px-5 h-10 outline-none"
                     />
                   </div>
