@@ -275,7 +275,7 @@ const Page = ({ params }) => {
                 name="category"
                 id="categoryProject"
                 required
-                defaultValue={project?.category}
+                // defaultValue={}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
@@ -285,7 +285,7 @@ const Page = ({ params }) => {
                 {categories?.map((item, index) => (
                   <option
                     key={index}
-                    // selected={item.name[0] == project?.category}
+                    selected={item.name[0] == project?.category}
                     value={item.name[0]}
                   >
                     {item.name[0]}
