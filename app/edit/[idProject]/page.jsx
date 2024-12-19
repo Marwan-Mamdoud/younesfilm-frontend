@@ -301,14 +301,19 @@ const Page = ({ params }) => {
               <select
                 name="style"
                 id="StyleProject"
-                defaultValue={project?.style}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
                 <option value="">Select Style</option>
-                <option value="">null</option>
-                <option value="tall">Tall</option>
-                <option value="wide">Wide</option>
+                <option selected={project?.style == ""} value="">
+                  null
+                </option>
+                <option selected={project?.style == "tall"} value="tall">
+                  Tall
+                </option>
+                <option selected={project?.style == "wide"} value="wide">
+                  Wide
+                </option>
               </select>
             </div>
             <div className="relative flex flex-col mt-5 items-start justify-start gap-2">
