@@ -275,7 +275,7 @@ const Page = ({ params }) => {
                 name="category"
                 id="categoryProject"
                 required
-                value={project?.category}
+                defaultValue={project?.category}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
@@ -301,7 +301,7 @@ const Page = ({ params }) => {
               <select
                 name="style"
                 id="StyleProject"
-                value={project?.style}
+                defaultValue={project?.style}
                 placeholder="Enter category of project"
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
