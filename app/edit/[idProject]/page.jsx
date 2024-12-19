@@ -305,7 +305,7 @@ const Page = ({ params }) => {
                 className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
               >
                 <option value="">Select Style</option>
-                <option selected={project?.style == ""} value="">
+                <option selected={project?.style == ""} value="null">
                   null
                 </option>
                 <option selected={project?.style == "tall"} value="tall">
