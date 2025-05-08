@@ -70,7 +70,7 @@ const ProjectsAndCategories = () => {
           {" "}
           Blogs
         </button>
-        <button
+        {/* <button
           onClick={() => {
             setShow("Categories's Blogs");
           }}
@@ -80,7 +80,7 @@ const ProjectsAndCategories = () => {
         >
           {" "}
           Categories for Blogs
-        </button>
+        </button> */}
       </div>
       <div className="flex flex-col w-full items-start justify-center gap-5">
         <p className="text-5xl font-semibold">{show}</p>
@@ -90,7 +90,7 @@ const ProjectsAndCategories = () => {
           {show == "Clients" && <Users />}
           {show == "Collaborations" && <Collaborations />}
           {show == "Blogs" && <Blogs />}
-          {show == "Categories's Blogs" && <CategoriesBlogs />}
+          {/* {show == "Categories's Blogs" && <CategoriesBlogs />} */}
         </div>
       </div>
     </>

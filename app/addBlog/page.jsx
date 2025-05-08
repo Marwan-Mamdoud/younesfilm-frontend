@@ -35,7 +35,7 @@ export default function Page() {
       const result = await CreateBlog({
         name,
         description,
-        category,
+        // category,
         style,
         text: { en: texten, cz: textcz, ar: textar },
         image,
@@ -57,9 +57,9 @@ export default function Page() {
       toast.error(error);
     }
   };
-  useEffect(() => {
-    GetAllCat();
-  }, []);
+  // useEffect(() => {
+  //   GetAllCat();
+  // }, []);
   return (
     <div className="w-full ">
       <div className="w-full pt-40 mx-auto">
@@ -157,7 +157,7 @@ export default function Page() {
               className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
             />
           </div>
-          <div className="flex flex-col mt-5 items-start justify-start gap-2">
+          {/* <div className="flex flex-col mt-5 items-start justify-start gap-2">
             <label htmlFor="categoryProject">
               Category of Blog <span className="text-red-600 text-xl"> *</span>
             </label>
@@ -179,7 +179,7 @@ export default function Page() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="flex flex-col mt-5 items-start justify-start gap-2">
             <label htmlFor="">
               Style of Blog <span className="text-red-600 text-xl"> *</span>

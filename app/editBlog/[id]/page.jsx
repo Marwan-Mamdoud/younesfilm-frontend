@@ -38,7 +38,7 @@ export default function Page({ params }) {
         id,
         name,
         description,
-        category,
+        // category,
         style,
         text: { en: texten, cz: textcz, ar: textar },
         image,
@@ -79,7 +79,7 @@ export default function Page({ params }) {
   };
   useEffect(() => {
     getblog();
-    GetAllCat();
+    // GetAllCat();
   }, []);
   return (
     <div className="w-full ">
@@ -180,7 +180,7 @@ export default function Page({ params }) {
               className="w-full rounded-md hidden bg-white text-black px-5 h-10 outline-none"
             />
           </div>
-          <div className="flex flex-col mt-5 items-start justify-start gap-2">
+          {/* <div className="flex flex-col mt-5 items-start justify-start gap-2">
             <label htmlFor="categoryProject">
               Category of Blog <span className="text-red-600 text-xl"> *</span>
             </label>
@@ -206,7 +206,7 @@ export default function Page({ params }) {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="flex flex-col mt-5 items-start justify-start gap-2">
             <label htmlFor="">
               Style of Blog <span className="text-red-600 text-xl"> *</span>
