@@ -28,6 +28,7 @@ export default function Page({ params }) {
   const [textar, setTextAr] = useState();
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
+  const [style, setStyle] = useState();
   const [loading, setLoading] = useState(false);
   const hundleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +39,7 @@ export default function Page({ params }) {
         name,
         description,
         category,
+        style,
         text: { en: texten, cz: textcz, ar: textar },
         image,
       });
@@ -68,6 +70,7 @@ export default function Page({ params }) {
         setTextCz(data.text.cz);
         setTextEn(data.text.en);
         setDescription(data.description);
+        setStyle(data.style);
         setCategory(data.category);
       }
     } catch (error) {
@@ -202,6 +205,27 @@ export default function Page({ params }) {
                   {item.name[0]}
                 </option>
               ))}
+            </select>
+          </div>
+          <div className="flex flex-col mt-5 items-start justify-start gap-2">
+            <label htmlFor="">
+              Style of Blog <span className="text-red-600 text-xl"> *</span>
+            </label>
+            <select
+              name="style"
+              defaultValue="none"
+              onChange={(e) => setStyle(e.target.value)}
+              className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+            >
+              <option selected={style == "none"} value="none">
+                none
+              </option>
+              <option selected={style == "tall"} value="tall">
+                Tall
+              </option>
+              <option selected={style == "wide"} value="wide">
+                Wide
+              </option>
             </select>
           </div>
           <div className="flex flex-col mt-5 items-start justify-start gap-2">

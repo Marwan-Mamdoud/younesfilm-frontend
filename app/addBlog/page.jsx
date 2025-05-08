@@ -26,6 +26,7 @@ export default function Page() {
   const [textar, setTextAr] = useState();
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
+  const [style, setStyle] = useState();
   const [loading, setLoading] = useState(false);
   const hundleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +36,7 @@ export default function Page() {
         name,
         description,
         category,
+        style,
         text: { en: texten, cz: textcz, ar: textar },
         image,
       });
@@ -176,6 +178,23 @@ export default function Page() {
                   {item.name[0]}
                 </option>
               ))}
+            </select>
+          </div>
+          <div className="flex flex-col mt-5 items-start justify-start gap-2">
+            <label htmlFor="">
+              Style of Blog <span className="text-red-600 text-xl"> *</span>
+            </label>
+            <select
+              name="style"
+              defaultValue="none"
+              onChange={(e) => setStyle(e.target.value)}
+              className="w-full rounded-md bg-white text-black px-5 h-10 outline-none"
+            >
+              <option selected value="none">
+                none
+              </option>
+              <option value="tall">Tall</option>
+              <option value="wide">Wide</option>
             </select>
           </div>
           <div className="flex flex-col mt-5 items-start justify-start gap-2">
