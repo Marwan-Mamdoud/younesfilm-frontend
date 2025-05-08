@@ -34,7 +34,7 @@ const ProjectsAndCategories = () => {
           } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
         >
           {" "}
-          Categories's Projects
+          Categories for Projects
         </button>
         <button
           onClick={() => {
@@ -79,7 +79,7 @@ const ProjectsAndCategories = () => {
           } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
         >
           {" "}
-          Categories's Blogs
+          Categories for Blogs
         </button>
       </div>
       <div className="flex flex-col w-full items-start justify-center gap-5">
