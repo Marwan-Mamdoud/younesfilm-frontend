@@ -5,6 +5,8 @@ import Categories from "./Categories";
 import { useState } from "react";
 import Users from "./Users";
 import Collaborations from "./Collaborations";
+import CategoriesBlogs from "./CategoirsBlogs";
+import Blogs from "./Blogs";
 
 const ProjectsAndCategories = () => {
   const [show, setShow] = useState("Projects");
@@ -25,6 +27,17 @@ const ProjectsAndCategories = () => {
         </button>
         <button
           onClick={() => {
+            setShow("Categories");
+          }}
+          className={`${
+            show == "Categories" && "bg-white text-black"
+          } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
+        >
+          {" "}
+          Categories's Projects
+        </button>
+        <button
+          onClick={() => {
             setShow("Clients");
           }}
           className={`${
@@ -34,17 +47,7 @@ const ProjectsAndCategories = () => {
           {" "}
           Clients
         </button>
-        <button
-          onClick={() => {
-            setShow("Categories");
-          }}
-          className={`${
-            show == "Categories" && "bg-white text-black"
-          } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
-        >
-          {" "}
-          Categories
-        </button>
+
         <button
           onClick={() => {
             setShow("Collaborations");
@@ -56,6 +59,28 @@ const ProjectsAndCategories = () => {
           {" "}
           Collaborations
         </button>
+        <button
+          onClick={() => {
+            setShow("Blogs");
+          }}
+          className={`${
+            show == "Blogs" && "bg-white text-black"
+          } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
+        >
+          {" "}
+          Blogs
+        </button>
+        <button
+          onClick={() => {
+            setShow("Categories's Blogs");
+          }}
+          className={`${
+            show == "Categories's Blogs" && "bg-white text-black"
+          } flex justify-center items-center gap-2 border-2 border-white rounded-full px-7 py-[8px]  hover:bg-white hover:text-black duration-500 ease-in`}
+        >
+          {" "}
+          Categories's Blogs
+        </button>
       </div>
       <div className="flex flex-col w-full items-start justify-center gap-5">
         <p className="text-5xl font-semibold">{show}</p>
@@ -64,6 +89,8 @@ const ProjectsAndCategories = () => {
           {show == "Categories" && <Categories />}
           {show == "Clients" && <Users />}
           {show == "Collaborations" && <Collaborations />}
+          {show == "Blogs" && <Blogs />}
+          {show == "Categories's Blogs" && <CategoriesBlogs />}
         </div>
       </div>
     </>

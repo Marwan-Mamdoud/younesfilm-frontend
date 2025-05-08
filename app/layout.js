@@ -37,11 +37,11 @@ export default function RootLayout({ children }) {
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
-        <div className="absolute w-[100%]   flex  mt-5 z-30 justify-around items-center">
+        <div className="absolute w-[100%]   flex  mt-5 z-30 justify-around items-start">
           <Link href="/" className="text-5xl text-white font-semibold ">
             Dashboard
           </Link>
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center w-1/2 flex-wrap justify-end gap-6">
             <Link
               href="/add"
               className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px] hover:bg-white hover:text-black duration-500 ease-in"
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
               className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px]  hover:bg-white hover:text-black duration-500 ease-in"
             >
               {" "}
-              <FaPlus /> New Categories
+              <FaPlus /> New Categories's Projects
             </Link>
             <Link
               href="/addUser"
@@ -69,6 +69,20 @@ export default function RootLayout({ children }) {
             >
               {" "}
               <FaPlus /> New Collaboration
+            </Link>
+            <Link
+              href="/addBlog"
+              className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px]  hover:bg-white hover:text-black duration-500 ease-in"
+            >
+              {" "}
+              <FaPlus /> New Blog
+            </Link>
+            <Link
+              href="/addCategoryBlog"
+              className="flex justify-center items-center gap-2 border-2 border-white rounded-full px-5 py-[10px]  hover:bg-white hover:text-black duration-500 ease-in"
+            >
+              {" "}
+              <FaPlus /> New Categories's Blogs
             </Link>
           </div>
         </div>
